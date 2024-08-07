@@ -49,6 +49,9 @@
     "stylelint": "^16.6.1",
     "stylelint-config-standard-scss": "^13.1.0"
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "prettier": {
     "trailingComma": "none"
   },
