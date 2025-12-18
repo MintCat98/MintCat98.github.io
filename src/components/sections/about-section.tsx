@@ -1,39 +1,34 @@
 "use client"
 
 import { useState } from "react"
-import { Mail, Github, Linkedin, FileText, ExternalLink, ChevronDown, ChevronUp } from "lucide-react"
+import { Mail, Github, Linkedin, ChevronDown, ChevronUp, NotebookPen, FileUser } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const skills = [
-  "Machine Learning",
-  "Deep Learning",
-  "Natural Language Processing",
-  "Computer Vision",
-  "Reinforcement Learning",
-  "Human-AI Interaction",
-  "PyTorch",
-  "TensorFlow",
-  "Transformers",
-  "LLMs",
+const socialLinks = [
+  { icon: Mail, href: "mailto:mintcat@kaist.ac.kr", label: "Email" },
+  { icon: Github, href: "https://github.com/MintCat98", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/mintcatkmc-361a5a294/", label: "LinkedIn" },
+  { icon: FileUser, href: "/cv.pdf", label: "CV" },
+  { icon: NotebookPen, href: "https://dev-mintcat.tistory.com/", label: "Blog" },
 ]
 
 const interests = [
-  "Large Language Models",
+  "Physical AI & Robotics",
   "Multimodal AI",
-  "AI Safety & Alignment",
+  "Vision-Language Models",
+  "Reinforcement Learning",
+  "Robustness in AI",
+  "AI Safety",
   "Explainable AI",
-  "AI for Social Good",
-  "Human-Centered AI",
-  "Cognitive Science",
-  "Computational Linguistics",
 ]
 
-const socialLinks = [
-  { icon: Mail, href: "mailto:alex.chen@university.edu", label: "Email" },
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: FileText, href: "/cv.pdf", label: "CV" },
-  { icon: ExternalLink, href: "https://tistory.com", label: "Blog" },
+const skills = [
+  "Python",
+  "C/C++",
+  "PyTorch",
+  "Django",
+  "Figma",
+  "CAD & SolidWorks",
 ]
 
 function QuotationMark() {
@@ -56,16 +51,16 @@ export function AboutSection() {
       <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
         {/* Profile Photo */}
         <div className="relative mb-6">
-          <div className="w-44 h-44 rounded-full overflow-hidden border-4 border-muted bg-muted">
+          <div className="w-55 h-55 rounded-full overflow-hidden border-4 border-muted bg-muted">
             <img
-              src="/professional-headshot-of-asian-male-researcher-wit.jpg"
+              src="/0.profile.jpeg"
               alt="Mincheol Kang"
               className="w-full h-full object-cover"
             />
           </div>
         </div>
 
-        <h1 className="text-4xl font-bold text-foreground">Mincheol Kang</h1>
+        <h1 className="text-4xl font-bold text-foreground">Mincheol Kang (강민철)</h1>
         <p className="text-primary font-medium text-lg mt-2">AI Researcher</p>
         <p className="text-muted-foreground text-sm mt-1">M.S. @ KAIST, South Korea</p>
 
@@ -76,9 +71,9 @@ export function AboutSection() {
           <p className="text-foreground leading-relaxed text-lg pl-10">
             I&apos;m an AI researcher passionate about building intelligent systems that understand and interact with
             humans naturally. My work lies at the intersection of{" "}
-            <span className="text-primary font-medium">machine learning</span>,{" "}
-            <span className="text-primary font-medium">natural language processing</span>, and{" "}
-            <span className="text-primary font-medium">human-AI interaction</span>.
+            <span className="text-primary font-medium">robotics AI</span>,{" "}
+            <span className="text-primary font-medium">vision language models</span>, and{" "}
+            <span className="text-primary font-medium">trustworthy AI</span>.
           </p>
         </div>
 
@@ -89,8 +84,8 @@ export function AboutSection() {
               href={link.href}
               className="social-btn"
               aria-label={link.label}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              target={!link.href.startsWith("mailto:") ? "_blank" : undefined}
+              rel={!link.href.startsWith("mailto:") ? "noopener noreferrer" : undefined}
             >
               <link.icon className="w-4 h-4 shrink-0" />
               <span className="btn-label text-sm font-medium">{link.label}</span>
