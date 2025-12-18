@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"
+import { ExperienceApp } from "../components/pages/experience-app"
+
+const pathname = Astro.url.pathname
+---
+<BaseLayout title="Experience | Mincheol Kang" description="Professional experience and education">
+  <ExperienceApp pathname={pathname} client:load />
+</BaseLayout>

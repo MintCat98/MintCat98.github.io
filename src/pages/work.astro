@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"
+import { WorkApp } from "../components/pages/work-app"
+
+const pathname = Astro.url.pathname
+---
+<BaseLayout title="Work | Mincheol Kang" description="Selected projects and research work">
+  <WorkApp pathname={pathname} client:load />
+</BaseLayout>
