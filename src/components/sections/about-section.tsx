@@ -33,7 +33,7 @@ const skills = [
 
 function QuotationMark() {
   return (
-    <svg viewBox="0 0 100 100" className="w-10 h-10 text-muted-foreground/40" fill="currentColor">
+    <svg viewBox="0 0 100 100" className="w-10 h-10 text-muted-foreground/40 -scale-x-100" fill="currentColor">
       <path d="M30 60c-8.3 0-15-6.7-15-15s6.7-15 15-15c2.8 0 5.4.8 7.6 2.1C35.8 22.8 28.4 15 20 15v-5c15 0 27.5 12.5 27.5 27.5 0 12.4-10.1 22.5-22.5 22.5h5zm40 0c-8.3 0-15-6.7-15-15s6.7-15 15-15c2.8 0 5.4.8 7.6 2.1C75.8 22.8 68.4 15 60 15v-5c15 0 27.5 12.5 27.5 27.5 0 12.4-10.1 22.5-22.5 22.5h5z" />
     </svg>
   )
@@ -65,7 +65,7 @@ export function AboutSection() {
         <p className="text-muted-foreground text-sm mt-1">M.S. @ KAIST, South Korea</p>
 
         <div className="relative mt-8 px-4">
-          <div className="absolute -left-2 -top-2">
+          <div className="absolute left-19 -top-3">
             <QuotationMark />
           </div>
           <p className="text-foreground leading-relaxed text-lg pl-10">
