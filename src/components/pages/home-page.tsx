@@ -3,6 +3,7 @@
 import { AboutSection } from "@/components/sections/about-section"
 import { HighlightsSection } from "@/components/sections/highlights-section"
 import { NewsSection } from "@/components/sections/news-section"
+import { Footer } from "@/components/footer"
 
 export function HomePageContent() {
   return (
@@ -24,6 +25,8 @@ export function HomePageContent() {
           <NewsSection />
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

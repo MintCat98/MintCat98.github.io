@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { GraduationCap, Briefcase, FlaskConical, ChevronDown, ChevronUp } from "lucide-react"
+import { Footer } from "@/components/footer"
 
 type ExperienceCategory = "education" | "work" | "research"
 
@@ -252,6 +253,7 @@ export function ExperiencePageContent() {
           </div>
         </div>
       </div>
+        <Footer />
       </div>
     </div>
   )
