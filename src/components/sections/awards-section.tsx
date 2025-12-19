@@ -5,63 +5,71 @@ import { Star, ChevronRight, Trophy, Medal, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-const awards = [
+const awardsData = [
   {
     id: 1,
+    title: "2024 Presidential Science Scholarship",
+    organization: "Korea Student Aid Foundation (KOSAF)",
+    description: "Recipient of the 2024 Presidential Science Scholarship, awarded to only 27 junior-level students nationwide in the fields of science and engineering.",
+    year: 2024,
+    month: 7,
+    selected: true,
+    link: "#",
+    icon: Trophy,
+    image: "/awards/presidential-science-scholarship-2024.png",
+  },
+  {
+    id: 2,
+    title: "2024 Scholarship Recipient",
+    organization: "Dongil Culture Scholarship Foundation (동일문화장학재단)",
+    description: "Recipient of the 2024 Dongil Culture Academic Excellence Scholarship as a DGIST President-nominated representative.",
+    year: 2024,
+    month: 2,
+    selected: false,
+    link: "#",
+    icon: Trophy,
+    image: "/awards/dongil-culture-scholarship-foundation-2024.png",
+  },
+  {
+    id: 3,
     title: "Outstanding Paper Award",
     organization: "ACL 2024",
     description: "For multilingual reasoning research",
     year: 2024,
-    selected: true,
+    month: 8,
+    selected: false,
     link: "#",
     icon: Trophy,
     image: "/acl-conference-outstanding-paper-award-ceremony.jpg",
   },
-  {
-    id: 2,
-    title: "Rising Star in AI",
-    organization: "Stanford HAI",
-    description: "Recognition for early-career contributions to AI safety",
-    year: 2024,
-    selected: true,
-    link: "#",
-    icon: Star,
-    image: "/stanford-hai-rising-star-award-ceremony.jpg",
-  },
-  {
-    id: 3,
-    title: "Best Demo Award",
-    organization: "EMNLP 2023",
-    description: "For SafeChat interactive demonstration",
-    year: 2023,
-    selected: true,
-    link: "#",
-    icon: Medal,
-    image: "/emnlp-conference-best-demo-award-presentation.jpg",
-  },
-  {
-    id: 4,
-    title: "Google PhD Fellowship",
-    organization: "Google Research",
-    description: "Fellowship for exceptional PhD students in ML",
-    year: 2022,
-    selected: false,
-    link: "#",
-    icon: Award,
-    image: "/google-phd-fellowship-award-ceremony.jpg",
-  },
-  {
-    id: 5,
-    title: "NSF Graduate Research Fellowship",
-    organization: "National Science Foundation",
-    description: "Three-year fellowship for graduate research",
-    year: 2021,
-    selected: false,
-    link: "#",
-    icon: Award,
-    image: "/nsf-graduate-research-fellowship-certificate.jpg",
-  },
+
+  // Template for future awards
+  // {
+  //   id: 1,
+  //   title: "Outstanding Paper Award",
+  //   organization: "ACL 2024",
+  //   description: "For multilingual reasoning research",
+  //   year: 2024,
+  //   month: 8,
+  //   selected: true,
+  //   link: "#",
+  //   icon: Trophy or Star or Medal or Award,
+  //   image: "/acl-conference-outstanding-paper-award-ceremony.jpg",
+  // },
 ]
+
+// Sort awards: selected first (sorted by date desc), then non-selected (sorted by date desc)
+const awards = [...awardsData].sort((a, b) => {
+  // First, prioritize selected items
+  if (a.selected !== b.selected) {
+    return a.selected ? -1 : 1
+  }
+  // Within the same selected status, sort by date (newest first)
+  if (a.year !== b.year) {
+    return b.year - a.year
+  }
+  return b.month - a.month
+})
 
 export function AwardsSection() {
   const [showSelectedOnly, setShowSelectedOnly] = useState(false)
@@ -100,8 +108,8 @@ export function AwardsSection() {
               award.selected ? "border-primary/30 bg-primary/5" : "border-border",
             )}
           >
-            <div className="flex items-stretch">
-              <div className="hidden sm:block w-48 shrink-0 overflow-hidden rounded-l-xl">
+            <div className="flex items-start">
+              <div className="hidden sm:block w-48 h-48 shrink-0 overflow-hidden rounded-l-xl">
                 <img
                   src={award.image || "/placeholder.svg"}
                   alt={award.title}
@@ -118,7 +126,9 @@ export function AwardsSection() {
                           Selected
                         </span>
                       )}
-                      <span className="text-xs text-muted-foreground">{award.year}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(award.year, award.month - 1).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                      </span>
                     </div>
                     <h3 className="text-foreground font-medium mb-1 leading-snug group-hover:text-primary transition-colors">
                       {award.title}
