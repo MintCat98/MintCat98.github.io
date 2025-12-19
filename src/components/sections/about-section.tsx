@@ -55,6 +55,8 @@ export function AboutSection() {
             <img
               src="/base/0.profile.jpeg"
               alt="Mincheol Kang"
+              loading="eager"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>
