@@ -178,6 +178,23 @@ const timelineItems: TimelineItem[] = [
     workTab: "publications",
     highlightId: 3,
   },
+  {
+    category: "education",
+    title: "H-Mobility Class",
+    organization: (
+      <>
+        <a href="https://h-mobility-class.com/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Hyundai NGV, South Korea</a>
+      </>
+    ),
+    startDate: "Apr 2025",
+    endDate: "Jun 2025",
+    description: (
+      <>
+        Selected for the Autonomous Driving track, completing a comprehensive curriculum covering perception, motion planning, and vehicle network systems.
+      </>
+    ),
+    link: "",
+  },
 ]
 
 const categoryConfig: Record<
