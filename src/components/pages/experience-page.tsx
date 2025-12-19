@@ -1,93 +1,106 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { GraduationCap, Briefcase, FlaskConical, ChevronDown, ChevronUp } from "lucide-react"
 import { Footer } from "@/components/footer"
 
 type ExperienceCategory = "education" | "work" | "research"
 
 interface TimelineItem {
-  id: number
   category: ExperienceCategory
   title: string
   organization: string
-  period: string
-  impact: string
+  startDate: string // Format: "Feb 2021" or "2021" (month is optional)
+  endDate?: string  // Format: "Feb 2021" or "2021" or "Present" (optional, if omitted shows only startDate)
+  description: React.ReactNode
   link: string
+  // Optional: specify tab and highlight ID for work page navigation
+  workTab?: "publications" | "projects" | "press" | "awards"
+  highlightId?: number
 }
 
 const timelineItems: TimelineItem[] = [
   {
-    id: 1,
-    category: "work",
-    title: "Research Scientist",
-    organization: "Stanford University",
-    period: "2023 - Present",
-    impact: "Leading AI safety and alignment research initiatives",
-    link: "/work",
+    category: "education",
+    title: "B.S. in Computer Science",
+    organization: "@ Daegu Gyeongbuk Institute of Science and Technology (DGIST), South Korea",
+    startDate: "Feb 2021",
+    endDate: "Feb 2026",
+    description: (
+      <>
+        GPA: <i>4.00/4.30 (97.0%)</i> | Advisor: <a href="https://scholar.google.com/citations?user=jsHfhqgAAAAJ" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><i>Prof. Yeseong Kim</i></a><br />
+        Thesis: <i>"CoDeMP: Color Description Multimodal Pipeline"</i>
+      </>
+    ),
+    link: "/work?tab=publications&highlight=1",
+    workTab: "publications",
+    highlightId: 1,
   },
   {
-    id: 2,
-    category: "research",
-    title: "Research Intern",
-    organization: "Google DeepMind",
-    period: "Summer 2023",
-    impact: "Developed novel RLHF methods for LLM alignment",
-    link: "/work",
-  },
-  {
-    id: 3,
     category: "education",
     title: "Ph.D. in Computer Science",
     organization: "Stanford University",
-    period: "2019 - 2024",
-    impact: "Thesis: Aligning LLMs with Human Values",
-    link: "/work",
+    startDate: "Sep 2019",
+    endDate: "Jun 2024",
+    description: "Thesis: Aligning LLMs with Human Values",
+    link: "/work?tab=publications&highlight=3",
+    workTab: "publications",
+    highlightId: 3,
   },
   {
-    id: 4,
     category: "research",
     title: "Research Intern",
     organization: "OpenAI",
-    period: "Summer 2022",
-    impact: "Contributed to constitutional AI research",
-    link: "/work",
+    startDate: "Jun 2022",
+    endDate: "Aug 2022",
+    description: "Contributed to constitutional AI research",
+    link: "/work?tab=publications&highlight=1",
+    workTab: "publications",
+    highlightId: 1,
   },
   {
-    id: 5,
     category: "work",
     title: "ML Engineer",
     organization: "Anthropic",
-    period: "2021 - 2022",
-    impact: "Built safety evaluation frameworks for Claude",
-    link: "/work",
+    startDate: "Jan 2021",
+    endDate: "Dec 2022",
+    description: "Built safety evaluation frameworks for Claude",
+    link: "/work?tab=projects&highlight=1",
+    workTab: "projects",
+    highlightId: 1,
   },
   {
-    id: 6,
     category: "education",
     title: "M.S. in Computer Science",
     organization: "MIT",
-    period: "2017 - 2019",
-    impact: "Focus on NLP and machine learning",
-    link: "/work",
+    startDate: "Sep 2017",
+    endDate: "Jun 2019",
+    description: "Focus on NLP and machine learning",
+    link: "/work?tab=awards&highlight=1",
+    workTab: "awards",
+    highlightId: 1,
   },
   {
-    id: 7,
     category: "research",
     title: "Undergraduate Researcher",
     organization: "MIT CSAIL",
-    period: "2016 - 2017",
-    impact: "First-authored paper on neural machine translation",
-    link: "/work",
+    startDate: "Sep 2016",
+    endDate: "May 2017",
+    description: "First-authored paper on neural machine translation",
+    link: "/work?tab=publications&highlight=5",
+    workTab: "publications",
+    highlightId: 5,
   },
   {
-    id: 8,
     category: "education",
     title: "B.S. in Computer Science",
     organization: "MIT",
-    period: "2013 - 2017",
-    impact: "Graduated summa cum laude",
-    link: "/work",
+    startDate: "Sep 2013",
+    endDate: "Jun 2017",
+    description: "Graduated summa cum laude",
+    link: "/work?tab=awards&highlight=2",
+    workTab: "awards",
+    highlightId: 2,
   },
 ]
 
@@ -115,12 +128,42 @@ const categoryConfig: Record<
   },
 }
 
+// Helper function to parse date string to comparable value
+const parseDate = (dateStr: string): number => {
+  const months: Record<string, number> = {
+    Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
+    Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12
+  }
+  
+  const parts = dateStr.split(" ")
+  if (parts.length === 2) {
+    // Format: "Feb 2021"
+    const month = months[parts[0]] || 1
+    const year = parseInt(parts[1])
+    return year * 100 + month
+  } else {
+    // Format: "2021" (assume January)
+    return parseInt(parts[0]) * 100 + 1
+  }
+}
+
+// Helper function to format period display
+const formatPeriod = (startDate: string, endDate?: string): string => {
+  if (!endDate) return startDate
+  return `${startDate} - ${endDate}`
+}
+
 export function ExperiencePageContent() {
   const [showAll, setShowAll] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
 
-  const displayedItems = showAll ? timelineItems : timelineItems.slice(0, 5)
-  const hiddenItems = timelineItems.slice(5)
+  // Sort items by startDate in descending order (most recent first)
+  const sortedItems = useMemo(() => {
+    return [...timelineItems].sort((a, b) => parseDate(b.startDate) - parseDate(a.startDate))
+  }, [])
+
+  const displayedItems = showAll ? sortedItems : sortedItems.slice(0, 5)
+  const hiddenItems = sortedItems.slice(5)
 
   const handleToggle = () => {
     setIsAnimating(true)
@@ -140,12 +183,12 @@ export function ExperiencePageContent() {
           <div className="absolute left-[19px] top-0 bottom-0 w-0.5 bg-border" />
 
           <div className="space-y-6">
-            {timelineItems.slice(0, 5).map((item) => {
+            {sortedItems.slice(0, 5).map((item, index) => {
               const config = categoryConfig[item.category]
               const Icon = config.icon
 
               return (
-                <div key={item.id} className="relative flex gap-6 group">
+                <div key={`${item.startDate}-${item.title}-${index}`} className="relative flex gap-6 group">
                   {/* Timeline dot */}
                   <div
                     className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center ${config.bgColor} border-2 ${config.color} shrink-0 transition-transform duration-300 group-hover:scale-110`}
@@ -158,7 +201,7 @@ export function ExperiencePageContent() {
                     <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <div>
-                          <span className="text-xs text-muted-foreground">{item.period}</span>
+                          <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
                           <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
                             {item.title}
                           </h3>
@@ -168,7 +211,7 @@ export function ExperiencePageContent() {
                           {config.label}
                         </span>
                       </div>
-                      <p className="text-muted-foreground text-sm">{item.impact}</p>
+                      <p className="text-muted-foreground text-sm">{item.description}</p>
                     </div>
                   </a>
                 </div>
@@ -177,12 +220,12 @@ export function ExperiencePageContent() {
 
             {showAll && (
               <div className={isAnimating ? "animate-expand space-y-6" : "space-y-6"}>
-                {hiddenItems.map((item) => {
+                {hiddenItems.map((item, index) => {
                   const config = categoryConfig[item.category]
                   const Icon = config.icon
 
                   return (
-                    <div key={item.id} className="relative flex gap-6 group">
+                    <div key={`hidden-${item.startDate}-${item.title}-${index}`} className="relative flex gap-6 group">
                       <div
                         className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center ${config.bgColor} border-2 ${config.color} shrink-0 transition-transform duration-300 group-hover:scale-110`}
                       >
@@ -193,7 +236,7 @@ export function ExperiencePageContent() {
                         <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
                           <div className="flex items-start justify-between gap-4 mb-2">
                             <div>
-                              <span className="text-xs text-muted-foreground">{item.period}</span>
+                              <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
                               <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
                                 {item.title}
                               </h3>
@@ -203,7 +246,7 @@ export function ExperiencePageContent() {
                               {config.label}
                             </span>
                           </div>
-                          <p className="text-muted-foreground text-sm">{item.impact}</p>
+                          <p className="text-muted-foreground text-sm">{item.description}</p>
                         </div>
                       </a>
                     </div>
@@ -213,7 +256,7 @@ export function ExperiencePageContent() {
             )}
           </div>
 
-          {timelineItems.length > 5 && (
+          {sortedItems.length > 5 && (
             <div className="flex justify-center mt-8">
               <button
                 onClick={handleToggle}
@@ -227,7 +270,7 @@ export function ExperiencePageContent() {
                 ) : (
                   <>
                     <ChevronDown className="w-4 h-4" />
-                    Show More ({timelineItems.length - 5} more)
+                    Show More ({sortedItems.length - 5} more)
                   </>
                 )}
               </button>
@@ -258,3 +301,8 @@ export function ExperiencePageContent() {
     </div>
   )
 }
+
+      function setIsAnimating(arg0: boolean) {
+        throw new Error("Function not implemented.")
+      }
+

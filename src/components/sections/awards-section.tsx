@@ -1,9 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight, Trophy, Medal, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+
+interface AwardsSectionProps {
+  highlightId?: number | null
+}
 
 const awardsData = [
   {
@@ -119,9 +123,16 @@ const awards = [...awardsData].sort((a, b) => {
   return b.month - a.month
 })
 
-export function AwardsSection() {
+export function AwardsSection({ highlightId }: AwardsSectionProps) {
   const [showSelectedOnly, setShowSelectedOnly] = useState(false)
   const displayedAwards = showSelectedOnly ? awards.filter((a) => a.selected) : awards
+  const highlightRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    if (highlightId && highlightRef.current) {
+      highlightRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+  }, [highlightId])
 
   return (
     <section id="awards">
@@ -149,11 +160,13 @@ export function AwardsSection() {
         {displayedAwards.map((award) => (
           <a
             key={award.id}
+            ref={award.id === highlightId ? highlightRef : null}
             href={award.link}
             className={cn(
               "group block rounded-xl border bg-card transition-all duration-300",
               "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
               award.selected ? "border-primary/30 bg-primary/5" : "border-border",
+              award.id === highlightId && "highlight-card",
             )}
           >
             <div className="flex items-start">

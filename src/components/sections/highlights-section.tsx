@@ -10,7 +10,7 @@ const highlights = [
     title: "Featured Publication",
     subtitle: "NeurIPS 2024",
     content: "Aligning Large Language Models with Human Preferences via Constitutional AI",
-    link: "/work",
+    link: "/work?tab=publications&highlight=1",
     linkText: "See More Publications",
   },
   {
@@ -19,7 +19,7 @@ const highlights = [
     title: "Featured Project",
     subtitle: "Open Source",
     content: "SafeChat: A Framework for Building Trustworthy Conversational AI Systems",
-    link: "/work",
+    link: "/work?tab=projects&highlight=1",
     linkText: "See More Projects",
   },
   {
@@ -28,7 +28,7 @@ const highlights = [
     title: "Featured Honor",
     subtitle: "2024",
     content: "Outstanding Paper Award at ACL 2024 for work on multilingual reasoning",
-    link: "/work",
+    link: "/work?tab=awards&highlight=1",
     linkText: "See More Awards",
   },
 ]

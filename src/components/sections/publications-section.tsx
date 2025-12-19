@@ -1,9 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+
+interface PublicationsSectionProps {
+  highlightId?: number | null
+}
 
 const publications = [
   {
@@ -68,9 +72,16 @@ const publications = [
   },
 ]
 
-export function PublicationsSection() {
+export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
   const [showSelectedOnly, setShowSelectedOnly] = useState(false)
   const displayedPubs = showSelectedOnly ? publications.filter((p) => p.selected) : publications
+  const highlightRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    if (highlightId && highlightRef.current) {
+      highlightRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+  }, [highlightId])
 
   return (
     <section id="publications">
@@ -98,11 +109,13 @@ export function PublicationsSection() {
         {displayedPubs.map((pub) => (
           <a
             key={pub.id}
+            ref={pub.id === highlightId ? highlightRef : null}
             href={pub.link}
             className={cn(
               "group block rounded-xl border bg-card transition-all duration-300",
               "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
               pub.selected ? "border-primary/30 bg-primary/5" : "border-border",
+              pub.id === highlightId && "highlight-card",
             )}
           >
             <div className="flex items-stretch">

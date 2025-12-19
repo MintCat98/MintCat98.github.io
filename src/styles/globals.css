@@ -244,3 +244,33 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
 }
+
+/* Highlight animation for linked cards */
+@keyframes highlight-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(104, 191, 136, 0.7);
+    border-color: rgba(104, 191, 136, 0.8);
+  }
+  25% {
+    box-shadow: 0 0 20px 8px rgba(104, 191, 136, 0.4);
+    border-color: rgba(104, 191, 136, 1);
+  }
+  50% {
+    box-shadow: 0 0 10px 4px rgba(104, 191, 136, 0.3);
+    border-color: rgba(104, 191, 136, 0.8);
+  }
+  75% {
+    box-shadow: 0 0 20px 8px rgba(104, 191, 136, 0.4);
+    border-color: rgba(104, 191, 136, 1);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(104, 191, 136, 0);
+    border-color: rgba(104, 191, 136, 0.3);
+  }
+}
+
+.highlight-card {
+  animation: highlight-pulse 3s ease-in-out forwards;
+  border-color: rgba(104, 191, 136, 0.8) !important;
+  background: rgba(104, 191, 136, 0.1) !important;
+}

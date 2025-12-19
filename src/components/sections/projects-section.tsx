@@ -1,9 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+
+interface ProjectsSectionProps {
+  highlightId?: number | null
+}
 
 const projects = [
   {
@@ -54,9 +58,16 @@ const projects = [
   },
 ]
 
-export function ProjectsSection() {
+export function ProjectsSection({ highlightId }: ProjectsSectionProps) {
   const [showSelectedOnly, setShowSelectedOnly] = useState(false)
   const displayedProjects = showSelectedOnly ? projects.filter((p) => p.selected) : projects
+  const highlightRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    if (highlightId && highlightRef.current) {
+      highlightRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+  }, [highlightId])
 
   return (
     <section id="projects">
@@ -84,11 +95,13 @@ export function ProjectsSection() {
         {displayedProjects.map((project) => (
           <a
             key={project.id}
+            ref={project.id === highlightId ? highlightRef : null}
             href={project.link}
             className={cn(
               "group block rounded-xl border bg-card overflow-hidden transition-all duration-300",
               "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
               project.selected ? "border-primary/30 bg-primary/5" : "border-border",
+              project.id === highlightId && "highlight-card",
             )}
           >
             <div className="w-full h-36 overflow-hidden">

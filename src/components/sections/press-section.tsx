@@ -1,9 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight, Mic, Newspaper } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+
+interface PressSectionProps {
+  highlightId?: number | null
+}
 
 const pressItems = [
   {
@@ -58,9 +62,16 @@ const pressItems = [
   },
 ]
 
-export function PressSection() {
+export function PressSection({ highlightId }: PressSectionProps) {
   const [showSelectedOnly, setShowSelectedOnly] = useState(false)
   const displayedItems = showSelectedOnly ? pressItems.filter((p) => p.selected) : pressItems
+  const highlightRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    if (highlightId && highlightRef.current) {
+      highlightRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+  }, [highlightId])
 
   return (
     <section id="press">
@@ -88,11 +99,13 @@ export function PressSection() {
         {displayedItems.map((item) => (
           <a
             key={item.id}
+            ref={item.id === highlightId ? highlightRef : null}
             href={item.link}
             className={cn(
               "group block rounded-xl border bg-card transition-all duration-300",
               "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
               item.selected ? "border-primary/30 bg-primary/5" : "border-border",
+              item.id === highlightId && "highlight-card",
             )}
           >
             <div className="flex items-stretch">

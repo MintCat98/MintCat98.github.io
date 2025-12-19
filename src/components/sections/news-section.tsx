@@ -9,41 +9,49 @@ const newsItems = [
     date: "Dec 2024",
     content: "Our paper on constitutional AI has been accepted at NeurIPS 2024",
     type: "publication",
+    link: "/work?tab=publications&highlight=1",
   },
   {
     date: "Nov 2024",
     content: "Gave an invited talk at Google DeepMind on LLM alignment",
     type: "talk",
+    link: "/work?tab=press&highlight=2",
   },
   {
     date: "Oct 2024",
     content: "Released SafeChat v2.0 with improved safety features",
     type: "project",
+    link: "/work?tab=projects&highlight=1",
   },
   {
     date: "Sep 2024",
     content: "Received the Outstanding Paper Award at ACL 2024",
     type: "award",
+    link: "/work?tab=awards&highlight=1",
   },
   {
     date: "Aug 2024",
     content: "Started collaboration with OpenAI on AI safety research",
     type: "collaboration",
+    link: "/work?tab=publications&highlight=1",
   },
   {
     date: "Jul 2024",
     content: "Our work featured in MIT Technology Review",
     type: "press",
+    link: "/work?tab=press&highlight=1",
   },
   {
     date: "Jun 2024",
     content: "Presented tutorial on LLM fine-tuning at NAACL 2024",
     type: "talk",
+    link: "/work?tab=press&highlight=5",
   },
   {
     date: "May 2024",
     content: "Two papers accepted at ICML 2024",
     type: "publication",
+    link: "/work?tab=publications&highlight=3",
   },
 ]
 
@@ -76,9 +84,10 @@ export function NewsSection() {
         <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Recent News</h2>
         <div className="space-y-3" ref={contentRef}>
           {newsItems.slice(0, 5).map((item, index) => (
-            <div
+            <a
               key={index}
-              className="flex items-start gap-4 p-4 rounded-lg bg-card/50 hover:bg-card border border-transparent hover:border-primary/20 transition-all duration-300 card-hover"
+              href={item.link}
+              className="flex items-start gap-4 p-4 rounded-lg bg-card/50 hover:bg-card border border-transparent hover:border-primary/20 transition-all duration-300 card-hover cursor-pointer"
             >
               <div className="flex items-center gap-2 text-muted-foreground text-sm min-w-[100px]">
                 <Calendar className="w-4 h-4" />
@@ -90,15 +99,16 @@ export function NewsSection() {
               <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${typeColors[item.type]}`}>
                 {item.type}
               </span>
-            </div>
+            </a>
           ))}
 
           {showAll && (
             <div className={isAnimating ? "animate-expand" : ""}>
               {hiddenNews.map((item, index) => (
-                <div
+                <a
                   key={index + 5}
-                  className="flex items-start gap-4 p-4 rounded-lg bg-card/50 hover:bg-card border border-transparent hover:border-primary/20 transition-all duration-300 card-hover mt-3"
+                  href={item.link}
+                  className="flex items-start gap-4 p-4 rounded-lg bg-card/50 hover:bg-card border border-transparent hover:border-primary/20 transition-all duration-300 card-hover mt-3 cursor-pointer"
                 >
                   <div className="flex items-center gap-2 text-muted-foreground text-sm min-w-[100px]">
                     <Calendar className="w-4 h-4" />
@@ -110,7 +120,7 @@ export function NewsSection() {
                   <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${typeColors[item.type]}`}>
                     {item.type}
                   </span>
-                </div>
+                </a>
               ))}
             </div>
           )}
