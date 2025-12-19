@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Star, ChevronRight, Trophy, Medal, Award } from "lucide-react"
+import { Star, ChevronRight, Trophy, Medal, Award, Icon, type LucideIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -9,7 +9,20 @@ interface AwardsSectionProps {
   highlightId?: number | null
 }
 
-const awardsData = [
+interface AwardItem {
+  id: number
+  title: string
+  organization: string
+  description: string
+  year: number
+  month: number // 1-12
+  selected: boolean // Featured/highlighted award
+  link?: string // Optional link
+  icon: LucideIcon // Trophy, Star, Medal, or Award
+  image: string // Path to award image (can be empty string)
+}
+
+const awardsData: AwardItem[] = [
   {
     id: 1,
     title: "Presidential Science Scholarship 22nd Cohort",
@@ -18,8 +31,7 @@ const awardsData = [
     year: 2024,
     month: 7,
     selected: true,
-    link: "#",
-    icon: Trophy,
+    icon: Medal,
     image: "/awards/presidential-science-scholarship-2024.png",
   },
   {
@@ -30,8 +42,7 @@ const awardsData = [
     year: 2024,
     month: 2,
     selected: false,
-    link: "#",
-    icon: Trophy,
+    icon: Medal,
     image: "/awards/dongil-culture-scholarship-foundation-2024.png",
   },
   {
@@ -41,8 +52,7 @@ const awardsData = [
     description: "Attained the Dean\'s List with a distinguished GPA of 4.07/4.30 (97.7%), reflecting consistent excellence in Engineering studies.",
     year: 2025,
     month: 9,
-    selected: true,
-    link: "#",
+    selected: false,
     icon: Award,
     image: "",
   },
@@ -54,7 +64,6 @@ const awardsData = [
     year: 2025,
     month: 3,
     selected: false,
-    link: "#",
     icon: Award,
     image: "/awards/deans-fall-2024.png",
   },
@@ -66,7 +75,6 @@ const awardsData = [
     year: 2024,
     month: 9,
     selected: false,
-    link: "#",
     icon: Award,
     image: "/awards/deans-spring-2024.png",
   },
@@ -78,7 +86,6 @@ const awardsData = [
     year: 2023,
     month: 2,
     selected: false,
-    link: "#",
     icon: Award,
     image: "",
   },
@@ -90,9 +97,20 @@ const awardsData = [
     year: 2022,
     month: 9,
     selected: false,
-    link: "#",
     icon: Award,
     image: "",
+  },
+  {
+    id: 8,
+    title: "IPESK Next-Generation Engineering Talent 2nd Cohort",
+    organization: "Institute for Promotion of Engineering and Science of Korea (IPESK)",
+    description: "",
+    year: 2025,
+    month: 9,
+    selected: true,
+    link: "https://www.openbadge-global.com/ns/portal/openbadge/public/assertions/detail/OWlCYWNvTFEvQXJiZHN5OGtONHZvdz09",
+    icon: Medal,
+    image: "/awards/ipesk-next-generation-engineering-talent-2025.png",
   },
 
   // Template for future awards
@@ -126,13 +144,52 @@ const awards = [...awardsData].sort((a, b) => {
 export function AwardsSection({ highlightId }: AwardsSectionProps) {
   const [showSelectedOnly, setShowSelectedOnly] = useState(false)
   const displayedAwards = showSelectedOnly ? awards.filter((a) => a.selected) : awards
-  const highlightRef = useRef<HTMLAnchorElement>(null)
+  const highlightRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (highlightId && highlightRef.current) {
       highlightRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
     }
   }, [highlightId])
+
+  const CardContent = ({ award }: { award: AwardItem }) => (
+    <div className="flex items-start">
+      <div className="hidden sm:block w-48 h-48 shrink-0 overflow-hidden rounded-l-xl">
+        <img
+          src={award.image || "/placeholder.svg"}
+          alt={award.title}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
+      <div className="flex-1 p-5">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              {award.selected && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
+                  <Star className="w-3 h-3 fill-current" />
+                  Selected
+                </span>
+              )}
+              <span className="text-xs text-muted-foreground">
+                {new Date(award.year, award.month - 1).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+              </span>
+            </div>
+            <h3 className="text-foreground font-medium mb-1 leading-snug group-hover:text-primary transition-colors">
+              {award.title}
+            </h3>
+            <p className="text-primary text-sm mb-1">{award.organization}</p>
+            <p className="text-muted-foreground text-sm">{award.description}</p>
+          </div>
+          {award.link && (
+            <ChevronRight className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 mt-1" />
+          )}
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <section id="awards">
@@ -157,54 +214,35 @@ export function AwardsSection({ highlightId }: AwardsSectionProps) {
       </div>
 
       <div className="space-y-4">
-        {displayedAwards.map((award) => (
-          <a
-            key={award.id}
-            ref={award.id === highlightId ? highlightRef : null}
-            href={award.link}
-            className={cn(
-              "group block rounded-xl border bg-card transition-all duration-300",
-              "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
-              award.selected ? "border-primary/30 bg-primary/5" : "border-border",
-              award.id === highlightId && "highlight-card",
-            )}
-          >
-            <div className="flex items-start">
-              <div className="hidden sm:block w-48 h-48 shrink-0 overflow-hidden rounded-l-xl">
-                <img
-                  src={award.image || "/placeholder.svg"}
-                  alt={award.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="flex-1 p-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      {award.selected && (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
-                          <Star className="w-3 h-3 fill-current" />
-                          Selected
-                        </span>
-                      )}
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(award.year, award.month - 1).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
-                      </span>
-                    </div>
-                    <h3 className="text-foreground font-medium mb-1 leading-snug group-hover:text-primary transition-colors">
-                      {award.title}
-                    </h3>
-                    <p className="text-primary text-sm mb-1">{award.organization}</p>
-                    <p className="text-muted-foreground text-sm">{award.description}</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 mt-1" />
-                </div>
-              </div>
+        {displayedAwards.map((award) => {
+          const cardClasses = cn(
+            "group block rounded-xl border bg-card transition-all duration-300",
+            "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
+            award.selected ? "border-primary/30 bg-primary/5" : "border-border",
+            award.id === highlightId && "highlight-card",
+          )
+
+          return award.link ? (
+            <a
+              key={award.id}
+              ref={award.id === highlightId ? highlightRef as React.RefObject<HTMLAnchorElement> : null}
+              href={award.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(cardClasses, "cursor-pointer")}
+            >
+              <CardContent award={award} />
+            </a>
+          ) : (
+            <div
+              key={award.id}
+              ref={award.id === highlightId ? highlightRef : null}
+              className={cardClasses}
+            >
+              <CardContent award={award} />
             </div>
-          </a>
-        ))}
+          )
+        })}
       </div>
     </section>
   )
