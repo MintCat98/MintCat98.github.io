@@ -128,10 +128,11 @@ export function ExperiencePageContent() {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-12">
-      <div className="max-w-4xl mx-auto px-6">
-        <h1 className="text-3xl font-bold text-foreground mb-2">Experience</h1>
-        <p className="text-muted-foreground mb-12">My journey through academia and industry</p>
+    <div id="snap-container" className="h-screen overflow-y-auto">
+      <div className="min-h-screen pt-24 pb-12">
+        <div className="max-w-4xl mx-auto px-6">
+          <h1 className="text-3xl font-bold text-foreground mb-2">Experience</h1>
+          <p className="text-muted-foreground mb-12">My journey through academia and industry</p>
 
         <div className="relative">
           {/* Timeline spine */}
@@ -250,6 +251,7 @@ export function ExperiencePageContent() {
             })}
           </div>
         </div>
+      </div>
       </div>
     </div>
   )
