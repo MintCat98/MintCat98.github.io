@@ -9,7 +9,7 @@ type ExperienceCategory = "education" | "work" | "research"
 interface TimelineItem {
   category: ExperienceCategory
   title: string
-  organization: string
+  organization: React.ReactNode
   startDate: string // Format: "Feb 2021" or "2021" (month is optional)
   endDate?: string  // Format: "Feb 2021" or "2021" or "Present" (optional, if omitted shows only startDate)
   description: React.ReactNode
@@ -22,8 +22,12 @@ interface TimelineItem {
 const timelineItems: TimelineItem[] = [
   {
     category: "education",
-    title: "B.S. in Computer Science",
-    organization: "@ Daegu Gyeongbuk Institute of Science and Technology (DGIST), South Korea",
+    title: "B.S. in Computer Science and Engineering",
+    organization: (
+      <>
+        <a href="https://www.dgist.ac.kr/eng/index.do" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@ Daegu Gyeongbuk Institute of Science and Technology (DGIST), South Korea</a>
+      </>
+    ),
     startDate: "Feb 2021",
     endDate: "Feb 2026",
     description: (
@@ -38,69 +42,41 @@ const timelineItems: TimelineItem[] = [
   },
   {
     category: "education",
-    title: "Ph.D. in Computer Science",
-    organization: "Stanford University",
-    startDate: "Sep 2019",
-    endDate: "Jun 2024",
-    description: "Thesis: Aligning LLMs with Human Values",
-    link: "/work?tab=publications&highlight=3",
+    title: "M.S. in Electrical Engineering",
+    organization: (
+      <>
+        <a href="https://www.kaist.ac.kr/en/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@ Korea Advanced Institute of Science and Technology (KAIST), South Korea</a>
+      </>
+    ),
+    startDate: "Feb 2026",
+    endDate: "Present",
+    description: (
+      <>
+        Lab: <a href="http://acss.kaist.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><i>Autonomous Control and Stochastic Systems Research (ACSS) Lab</i></a><br />
+        GPA: <i>-/4.30 (-%)</i> | Advisor: <a href="https://soojean.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><i>Prof. Sujin Han</i></a><br />
+        Thesis: <i>"-"</i>
+      </>
+    ),
+    link: "/work?tab=publications&highlight=2",
     workTab: "publications",
-    highlightId: 3,
-  },
-  {
-    category: "research",
-    title: "Research Intern",
-    organization: "OpenAI",
-    startDate: "Jun 2022",
-    endDate: "Aug 2022",
-    description: "Contributed to constitutional AI research",
-    link: "/work?tab=publications&highlight=1",
-    workTab: "publications",
-    highlightId: 1,
-  },
-  {
-    category: "work",
-    title: "ML Engineer",
-    organization: "Anthropic",
-    startDate: "Jan 2021",
-    endDate: "Dec 2022",
-    description: "Built safety evaluation frameworks for Claude",
-    link: "/work?tab=projects&highlight=1",
-    workTab: "projects",
-    highlightId: 1,
-  },
-  {
-    category: "education",
-    title: "M.S. in Computer Science",
-    organization: "MIT",
-    startDate: "Sep 2017",
-    endDate: "Jun 2019",
-    description: "Focus on NLP and machine learning",
-    link: "/work?tab=awards&highlight=1",
-    workTab: "awards",
-    highlightId: 1,
-  },
-  {
-    category: "research",
-    title: "Undergraduate Researcher",
-    organization: "MIT CSAIL",
-    startDate: "Sep 2016",
-    endDate: "May 2017",
-    description: "First-authored paper on neural machine translation",
-    link: "/work?tab=publications&highlight=5",
-    workTab: "publications",
-    highlightId: 5,
-  },
-  {
-    category: "education",
-    title: "B.S. in Computer Science",
-    organization: "MIT",
-    startDate: "Sep 2013",
-    endDate: "Jun 2017",
-    description: "Graduated summa cum laude",
-    link: "/work?tab=awards&highlight=2",
-    workTab: "awards",
     highlightId: 2,
+  },
+  {
+    category: "education",
+    title: "Freshmen Global Leadership Program (FGLP)",
+    organization: (
+      <>
+        <a href="https://www.ucla.edu/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@ University of California, Los Angeles (UCLA), USA</a>
+      </>
+    ),
+    startDate: "Jun 2023",
+    endDate: "Aug 2023",
+    description: (
+      <>
+        Broadened international perspectives by participating in the DGIST FGLP, a culture-oriented exchange program.
+      </>
+    ),
+    link: "",
   },
 ]
 
@@ -197,23 +173,43 @@ export function ExperiencePageContent() {
                   </div>
 
                   {/* Content */}
-                  <a href={item.link} className="flex-1 pb-2">
-                    <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
-                      <div className="flex items-start justify-between gap-4 mb-2">
-                        <div>
-                          <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
-                          <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
-                            {item.title}
-                          </h3>
-                          <p className="text-primary text-sm">{item.organization}</p>
+                  {item.link ? (
+                    <a href={item.link} className="flex-1 pb-2">
+                      <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover cursor-pointer">
+                        <div className="flex items-start justify-between gap-4 mb-2">
+                          <div>
+                            <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
+                            <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
+                              {item.title}
+                            </h3>
+                            <p className="text-primary text-sm">{item.organization}</p>
+                          </div>
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
+                            {config.label}
+                          </span>
                         </div>
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
-                          {config.label}
-                        </span>
+                        <p className="text-muted-foreground text-sm">{item.description}</p>
                       </div>
-                      <p className="text-muted-foreground text-sm">{item.description}</p>
+                    </a>
+                  ) : (
+                    <div className="flex-1 pb-2">
+                      <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
+                        <div className="flex items-start justify-between gap-4 mb-2">
+                          <div>
+                            <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
+                            <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
+                              {item.title}
+                            </h3>
+                            <p className="text-primary text-sm">{item.organization}</p>
+                          </div>
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
+                            {config.label}
+                          </span>
+                        </div>
+                        <p className="text-muted-foreground text-sm">{item.description}</p>
+                      </div>
                     </div>
-                  </a>
+                  )}
                 </div>
               )
             })}
@@ -232,23 +228,43 @@ export function ExperiencePageContent() {
                         <Icon className={`w-4 h-4 ${config.color}`} />
                       </div>
 
-                      <a href={item.link} className="flex-1 pb-2">
-                        <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
-                          <div className="flex items-start justify-between gap-4 mb-2">
-                            <div>
-                              <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
-                              <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
-                                {item.title}
-                              </h3>
-                              <p className="text-primary text-sm">{item.organization}</p>
+                      {item.link ? (
+                        <a href={item.link} className="flex-1 pb-2">
+                          <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover cursor-pointer">
+                            <div className="flex items-start justify-between gap-4 mb-2">
+                              <div>
+                                <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
+                                <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
+                                  {item.title}
+                                </h3>
+                                <p className="text-primary text-sm">{item.organization}</p>
+                              </div>
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
+                                {config.label}
+                              </span>
                             </div>
-                            <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
-                              {config.label}
-                            </span>
+                            <p className="text-muted-foreground text-sm">{item.description}</p>
                           </div>
-                          <p className="text-muted-foreground text-sm">{item.description}</p>
+                        </a>
+                      ) : (
+                        <div className="flex-1 pb-2">
+                          <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
+                            <div className="flex items-start justify-between gap-4 mb-2">
+                              <div>
+                                <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
+                                <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
+                                  {item.title}
+                                </h3>
+                                <p className="text-primary text-sm">{item.organization}</p>
+                              </div>
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
+                                {config.label}
+                              </span>
+                            </div>
+                            <p className="text-muted-foreground text-sm">{item.description}</p>
+                          </div>
                         </div>
-                      </a>
+                      )}
                     </div>
                   )
                 })}
