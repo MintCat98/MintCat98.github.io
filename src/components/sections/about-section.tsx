@@ -62,7 +62,7 @@ export function AboutSection() {
 
         <h1 className="text-4xl font-bold text-foreground">Mincheol Kang (강민철)</h1>
         <p className="text-primary font-medium text-lg mt-2">AI Researcher</p>
-        <p className="text-muted-foreground text-sm mt-1">M.S. @ KAIST, South Korea</p>
+        <p className="text-muted-foreground text-sm mt-1">M.S. Student @ KAIST EE, South Korea</p>
 
         <div className="relative mt-8 px-4">
           <div className="absolute left-19 -top-3">

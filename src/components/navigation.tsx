@@ -10,8 +10,25 @@ const navItems = [
   { label: "Experience", href: "/experience" },
 ]
 
-export function Navigation({ pathname }: { pathname: string }) {
+export function Navigation({ pathname: initialPathname }: { pathname: string }) {
   const [scrolled, setScrolled] = useState(false)
+  const [currentPath, setCurrentPath] = useState(initialPathname)
+  
+  // 클라이언트에서 실제 경로 감지
+  useEffect(() => {
+    const path = window.location.pathname
+    // trailing slash 제거 (/ 제외)
+    const normalized = path.endsWith("/") && path !== "/" ? path.slice(0, -1) : path
+    setCurrentPath(normalized)
+  }, [])
+
+  // 경로 비교 함수 (startsWith로 유연하게 비교)
+  const isActivePath = (href: string) => {
+    if (href === "/") {
+      return currentPath === "/"
+    }
+    return currentPath === href || currentPath.startsWith(href + "/")
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,11 +70,11 @@ export function Navigation({ pathname }: { pathname: string }) {
               href={item.href}
               className={cn(
                 "text-sm font-medium transition-colors relative",
-                pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-foreground",
+                isActivePath(item.href) ? "text-primary" : "text-muted-foreground hover:text-foreground",
               )}
             >
               {item.label}
-              {pathname === item.href && (
+              {isActivePath(item.href) && (
                 <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />
               )}
             </a>
