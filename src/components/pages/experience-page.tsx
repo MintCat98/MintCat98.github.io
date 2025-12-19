@@ -32,7 +32,7 @@ const timelineItems: TimelineItem[] = [
     endDate: "Feb 2026",
     description: (
       <>
-        • GPA: <i>4.00/4.30 (97.0%)</i> | • Advisor: <a href="https://scholar.google.com/citations?user=jsHfhqgAAAAJ" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Yeseong Kim</i></a><br />
+        • GPA: <i>4.00/4.30 (97.0%)</i> | • Advisor: <i><a href="https://scholar.google.com/citations?user=jsHfhqgAAAAJ" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. Yeseong Kim</a></i><br />
         • Thesis: <i>"CoDeMP: Color Description Multimodal Pipeline"</i>
       </>
     ),
@@ -52,8 +52,8 @@ const timelineItems: TimelineItem[] = [
     endDate: "Present",
     description: (
       <>
-        • Lab: <a href="http://acss.kaist.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Autonomous Control and Stochastic Systems Research (ACSS) Lab</i></a><br />
-        • GPA: <i>-/4.30 (-%)</i> | • Advisor: <a href="https://soojean.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Sujin Han</i></a><br />
+        • Lab: <i><a href="http://acss.kaist.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Autonomous Control and Stochastic Systems Research (ACSS) Lab</a></i><br />
+        • GPA: <i>-/4.30 (-%)</i> | • Advisor: <i><a href="https://soojean.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. Sujin Han</a></i><br />
         • Thesis: <i>"-"</i>
       </>
     ),
@@ -90,7 +90,7 @@ const timelineItems: TimelineItem[] = [
     endDate: "Sep 2024",
     description: (
       <>
-        • Advisor: <a href="https://jyskwon.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Jean Y. Song</i></a><br />
+        • Advisor: <i><a href="https://jyskwon.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. Jean Y. Song</a></i><br />
         Co-authored <i>"Can We Delegate Learning to Automation?: A Comparative Study of LLM Chatbots, Search Engines, and Books"</i> as the second author, focusing on the design and execution of user studies.
       </>
     ),
@@ -110,7 +110,7 @@ const timelineItems: TimelineItem[] = [
     endDate: "Jun 2025",
     description: (
       <>
-        • Advisor: <a href="https://sites.google.com/site/mypurist/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Young-Sik Kim</i></a><br />
+        • Advisor: <i><a href="https://sites.google.com/site/mypurist/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. Young-Sik Kim</a></i><br />
         Focused on building a comprehensive theoretical foundation in cryptography, ranging from classical security to post-quantum cryptography.
       </>
     ),
@@ -130,7 +130,7 @@ const timelineItems: TimelineItem[] = [
     endDate: "Feb 2026",
     description: (
       <>
-        • Advisor: <a href="https://sites.google.com/view/dhpark/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Daehee Park</i></a><br />
+        • Advisor: <i><a href="https://sites.google.com/view/dhpark/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. Daehee Park</a></i><br />
         Main contributor for two papers currently under review at CVPR 2026, regarding long-tail problem mitigation and model quantization techniques.
       </>
     ),
@@ -150,7 +150,28 @@ const timelineItems: TimelineItem[] = [
     endDate: "Feb 2025",
     description: (
       <>
-        
+        Contributed to the performance optimization of
+        <i><a href="https://github.com/lablup/backend.ai" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"> Backend.AI</a></i>
+        , an enterprise-grade open-source platform for AI/GPU resource orchestration.
+      </>
+    ),
+    link: "?tab=publications&highlight=3",
+    workTab: "publications",
+    highlightId: 3,
+  },
+  {
+    category: "work",
+    title: "Notion Campus Leader",
+    organization: (
+      <>
+        <a href="https://www.notion.com/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Notion</a>
+      </>
+    ),
+    startDate: "Aug 2024",
+    endDate: "Present",
+    description: (
+      <>
+        Cohort 3 & 4: Empowering student communities at DGIST <i>(2024-2025)</i> and KAIST <i>(2026)</i> to optimize digital workflows and productivity.
       </>
     ),
     link: "?tab=publications&highlight=3",

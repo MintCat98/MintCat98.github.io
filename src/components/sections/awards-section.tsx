@@ -104,7 +104,7 @@ const awardsData: AwardItem[] = [
     id: 8,
     title: "IPESK Next-Generation Engineering Talent 2nd Cohort",
     organization: "Institute for Promotion of Engineering and Science of Korea (IPESK)",
-    description: "",
+    description: "Named a top-tier undergraduate engineering student based on my proven technical vision and commitment to advancing science and technology.",
     year: 2025,
     month: 9,
     selected: true,
@@ -112,20 +112,6 @@ const awardsData: AwardItem[] = [
     icon: Medal,
     image: "/awards/ipesk-next-generation-engineering-talent-2025.png",
   },
-
-  // Template for future awards
-  // {
-  //   id: 1,
-  //   title: "Outstanding Paper Award",
-  //   organization: "ACL 2024",
-  //   description: "For multilingual reasoning research",
-  //   year: 2024,
-  //   month: 8,
-  //   selected: true,
-  //   link: "#",
-  //   icon: Trophy or Star or Medal or Award,
-  //   image: "/acl-conference-outstanding-paper-award-ceremony.jpg",
-  // },
 ]
 
 // Sort awards: selected first (sorted by date desc), then non-selected (sorted by date desc)
@@ -225,7 +211,7 @@ export function AwardsSection({ highlightId }: AwardsSectionProps) {
           return award.link ? (
             <a
               key={award.id}
-              ref={award.id === highlightId ? highlightRef as React.RefObject<HTMLAnchorElement> : null}
+              ref={award.id === highlightId ? highlightRef as unknown as React.RefObject<HTMLAnchorElement> : null}
               href={award.link}
               target="_blank"
               rel="noopener noreferrer"
