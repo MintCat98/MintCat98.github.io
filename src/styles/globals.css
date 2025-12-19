@@ -274,3 +274,25 @@
   border-color: rgba(104, 191, 136, 0.8) !important;
   background: rgba(104, 191, 136, 0.1) !important;
 }
+
+/* Animated underline effect for links */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+  display: inline;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  height: 1.5px;
+  background-color: currentColor;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}

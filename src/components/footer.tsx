@@ -10,7 +10,7 @@ export function Footer() {
             href="https://github.com/MintCat98"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary hover:underline transition-colors"
+            className="text-primary link-underline transition-colors"
           >
             Mincheol Kang
           </a>

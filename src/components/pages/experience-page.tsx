@@ -25,15 +25,15 @@ const timelineItems: TimelineItem[] = [
     title: "B.S. in Computer Science and Engineering",
     organization: (
       <>
-        <a href="https://www.dgist.ac.kr/eng/index.do" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@ Daegu Gyeongbuk Institute of Science and Technology (DGIST), South Korea</a>
+        <a href="https://www.dgist.ac.kr/eng/index.do" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Daegu Gyeongbuk Institute of Science and Technology (DGIST), South Korea</a>
       </>
     ),
     startDate: "Feb 2021",
     endDate: "Feb 2026",
     description: (
       <>
-        GPA: <i>4.00/4.30 (97.0%)</i> | Advisor: <a href="https://scholar.google.com/citations?user=jsHfhqgAAAAJ" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><i>Prof. Yeseong Kim</i></a><br />
-        Thesis: <i>"CoDeMP: Color Description Multimodal Pipeline"</i>
+        • GPA: <i>4.00/4.30 (97.0%)</i> | • Advisor: <a href="https://scholar.google.com/citations?user=jsHfhqgAAAAJ" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Yeseong Kim</i></a><br />
+        • Thesis: <i>"CoDeMP: Color Description Multimodal Pipeline"</i>
       </>
     ),
     link: "/work?tab=publications&highlight=1",
@@ -45,16 +45,16 @@ const timelineItems: TimelineItem[] = [
     title: "M.S. in Electrical Engineering",
     organization: (
       <>
-        <a href="https://www.kaist.ac.kr/en/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@ Korea Advanced Institute of Science and Technology (KAIST), South Korea</a>
+        <a href="https://www.kaist.ac.kr/en/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Korea Advanced Institute of Science and Technology (KAIST), South Korea</a>
       </>
     ),
     startDate: "Feb 2026",
     endDate: "Present",
     description: (
       <>
-        Lab: <a href="http://acss.kaist.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><i>Autonomous Control and Stochastic Systems Research (ACSS) Lab</i></a><br />
-        GPA: <i>-/4.30 (-%)</i> | Advisor: <a href="https://soojean.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><i>Prof. Sujin Han</i></a><br />
-        Thesis: <i>"-"</i>
+        • Lab: <a href="http://acss.kaist.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Autonomous Control and Stochastic Systems Research (ACSS) Lab</i></a><br />
+        • GPA: <i>-/4.30 (-%)</i> | • Advisor: <a href="https://soojean.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Sujin Han</i></a><br />
+        • Thesis: <i>"-"</i>
       </>
     ),
     link: "/work?tab=publications&highlight=2",
@@ -66,7 +66,7 @@ const timelineItems: TimelineItem[] = [
     title: "Freshmen Global Leadership Program (FGLP)",
     organization: (
       <>
-        <a href="https://www.ucla.edu/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@ University of California, Los Angeles (UCLA), USA</a>
+        <a href="https://www.ucla.edu/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ University of California, Los Angeles (UCLA), USA</a>
       </>
     ),
     startDate: "Jun 2023",
@@ -77,6 +77,85 @@ const timelineItems: TimelineItem[] = [
       </>
     ),
     link: "",
+  },
+  {
+    category: "research",
+    title: "Undergraduate Student Researcher | Human-Computer Interaction",
+    organization: (
+      <>
+        <a href="https://diag.kr/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Designing Intelligence Augmentation Group (DIAG), South Korea</a>
+      </>
+    ),
+    startDate: "Feb 2024",
+    endDate: "Sep 2024",
+    description: (
+      <>
+        • Advisor: <a href="https://jyskwon.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Jean Y. Song</i></a><br />
+        Co-authored <i>"Can We Delegate Learning to Automation?: A Comparative Study of LLM Chatbots, Search Engines, and Books"</i> as the second author, focusing on the design and execution of user studies.
+      </>
+    ),
+    link: "?tab=publications&highlight=3",
+    workTab: "publications",
+    highlightId: 3,
+  },
+  {
+    category: "research",
+    title: "Undergraduate Student Researcher | Cryptography and Security",
+    organization: (
+      <>
+        <a href="https://sites.google.com/view/pacl/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Privacy and Applied Cryptography Lab (PACL), South Korea</a>
+      </>
+    ),
+    startDate: "Feb 2025",
+    endDate: "Jun 2025",
+    description: (
+      <>
+        • Advisor: <a href="https://sites.google.com/site/mypurist/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Young-Sik Kim</i></a><br />
+        Focused on building a comprehensive theoretical foundation in cryptography, ranging from classical security to post-quantum cryptography.
+      </>
+    ),
+    link: "?tab=publications&highlight=3",
+    workTab: "publications",
+    highlightId: 3,
+  },
+  {
+    category: "research",
+    title: "Undergraduate Student Researcher | Artificial Intelligence",
+    organization: (
+      <>
+        <a href="https://sites.google.com/view/isllab-dgist/home?authuser=0" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Intelligent Systems and Learning (ISL) Lab, South Korea</a>
+      </>
+    ),
+    startDate: "Jun 2025",
+    endDate: "Feb 2026",
+    description: (
+      <>
+        • Advisor: <a href="https://sites.google.com/view/dhpark/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline"><i>Prof. Daehee Park</i></a><br />
+        Main contributor for two papers currently under review at CVPR 2026, regarding long-tail problem mitigation and model quantization techniques.
+      </>
+    ),
+    link: "?tab=publications&highlight=3",
+    workTab: "publications",
+    highlightId: 3,
+  },
+  {
+    category: "work",
+    title: "Backend Developer Intern",
+    organization: (
+      <>
+        <a href="https://www.lablup.com/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Lablup Inc., South Korea</a>
+      </>
+    ),
+    startDate: "Dec 2024",
+    endDate: "Feb 2025",
+    description: (
+      <>
+        
+      </>
+    ),
+    link: "?tab=publications&highlight=3",
+    workTab: "publications",
+    highlightId: 3,
   },
 ]
 
