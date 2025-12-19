@@ -53,7 +53,7 @@ export function AboutSection() {
         <div className="relative mb-6">
           <div className="w-55 h-55 rounded-full overflow-hidden border-4 border-muted bg-muted">
             <img
-              src="/0.profile.jpeg"
+              src="/base/0.profile.jpeg"
               alt="Mincheol Kang"
               className="w-full h-full object-cover"
             />

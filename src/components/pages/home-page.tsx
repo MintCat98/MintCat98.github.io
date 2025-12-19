@@ -6,7 +6,7 @@ import { NewsSection } from "@/components/sections/news-section"
 
 export function HomePageContent() {
   return (
-    <div className="h-screen overflow-y-auto snap-y snap-mandatory">
+    <div id="snap-container" className="h-screen overflow-y-auto snap-y snap-mandatory">
       <section id="about" className="min-h-screen snap-start snap-always flex items-center pt-14">
         <div className="max-w-6xl mx-auto px-6 w-full py-12">
           <AboutSection />

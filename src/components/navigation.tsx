@@ -18,8 +18,21 @@ export function Navigation({ pathname }: { pathname: string }) {
       setScrolled(window.scrollY > 50)
     }
 
+    // 스냅 컨테이너 스크롤 감지 (Home 페이지용)
+    const snapContainer = document.getElementById("snap-container")
+    const handleSnapScroll = () => {
+      if (snapContainer) {
+        setScrolled(snapContainer.scrollTop > 50)
+      }
+    }
+
     window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    snapContainer?.addEventListener("scroll", handleSnapScroll)
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      snapContainer?.removeEventListener("scroll", handleSnapScroll)
+    }
   }, [])
 
   return (
