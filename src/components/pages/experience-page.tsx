@@ -13,7 +13,6 @@ interface TimelineItem {
   startDate: string // Format: "Feb 2021" or "2021" (month is optional)
   endDate?: string  // Format: "Feb 2021" or "2021" or "Present" (optional, if omitted shows only startDate)
   description: React.ReactNode
-  link: string
   // Optional: specify tab and highlight ID for work page navigation
   workTab?: "publications" | "projects" | "press" | "awards"
   highlightId?: number
@@ -36,7 +35,6 @@ const timelineItems: TimelineItem[] = [
         • Thesis: <i>"CoDeMP: Color Description Multimodal Pipeline"</i>
       </>
     ),
-    link: "/work?tab=publications&highlight=1",
     workTab: "publications",
     highlightId: 1,
   },
@@ -57,7 +55,6 @@ const timelineItems: TimelineItem[] = [
         • Thesis: <i>"-"</i>
       </>
     ),
-    link: "/work?tab=publications&highlight=2",
     workTab: "publications",
     highlightId: 2,
   },
@@ -76,7 +73,6 @@ const timelineItems: TimelineItem[] = [
         Broadened international perspectives by participating in the DGIST FGLP, a culture-oriented exchange program.
       </>
     ),
-    link: "",
   },
   {
     category: "research",
@@ -94,7 +90,6 @@ const timelineItems: TimelineItem[] = [
         Co-authored <i>"Can We Delegate Learning to Automation?: A Comparative Study of LLM Chatbots, Search Engines, and Books"</i> as the second author, focusing on the design and execution of user studies.
       </>
     ),
-    link: "?tab=publications&highlight=3",
     workTab: "publications",
     highlightId: 3,
   },
@@ -114,7 +109,6 @@ const timelineItems: TimelineItem[] = [
         Focused on building a comprehensive theoretical foundation in cryptography, ranging from classical security to post-quantum cryptography.
       </>
     ),
-    link: "?tab=publications&highlight=3",
     workTab: "publications",
     highlightId: 3,
   },
@@ -134,7 +128,6 @@ const timelineItems: TimelineItem[] = [
         Main contributor for two papers currently under review at CVPR 2026, regarding long-tail problem mitigation and model quantization techniques.
       </>
     ),
-    link: "?tab=publications&highlight=3",
     workTab: "publications",
     highlightId: 3,
   },
@@ -155,7 +148,6 @@ const timelineItems: TimelineItem[] = [
         , an enterprise-grade open-source platform for AI/GPU resource orchestration.
       </>
     ),
-    link: "?tab=publications&highlight=3",
     workTab: "publications",
     highlightId: 3,
   },
@@ -174,7 +166,6 @@ const timelineItems: TimelineItem[] = [
         Cohort 3 & 4: Empowering student communities at DGIST <i>(2024-2025)</i> and KAIST <i>(2026)</i> to optimize digital workflows and productivity.
       </>
     ),
-    link: "?tab=publications&highlight=3",
     workTab: "publications",
     highlightId: 3,
   },
@@ -193,7 +184,6 @@ const timelineItems: TimelineItem[] = [
         Selected for the Autonomous Driving track, completing a comprehensive curriculum covering perception, motion planning, and vehicle network systems.
       </>
     ),
-    link: "",
   },
 ]
 
@@ -219,6 +209,17 @@ const categoryConfig: Record<
     bgColor: "bg-chart-3/20",
     label: "Research",
   },
+}
+
+// Helper function to generate link from workTab and highlightId
+const generateLink = (item: TimelineItem): string => {
+  if (!item.workTab) return ""
+  const params = new URLSearchParams()
+  params.set("tab", item.workTab)
+  if (item.highlightId !== undefined) {
+    params.set("highlight", item.highlightId.toString())
+  }
+  return `/work?${params.toString()}`
 }
 
 // Helper function to parse date string to comparable value
@@ -290,8 +291,10 @@ export function ExperiencePageContent() {
                   </div>
 
                   {/* Content */}
-                  {item.link ? (
-                    <a href={item.link} className="flex-1 pb-2">
+                  {(() => {
+                    const link = generateLink(item)
+                    return link ? (
+                    <a href={link} className="flex-1 pb-2">
                       <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover cursor-pointer">
                         <div className="flex items-start justify-between gap-4 mb-2">
                           <div>
@@ -326,7 +329,9 @@ export function ExperiencePageContent() {
                         <p className="text-muted-foreground text-sm">{item.description}</p>
                       </div>
                     </div>
-                  )}
+                  )
+                  })()
+                  }
                 </div>
               )
             })}
@@ -345,8 +350,10 @@ export function ExperiencePageContent() {
                         <Icon className={`w-4 h-4 ${config.color}`} />
                       </div>
 
-                      {item.link ? (
-                        <a href={item.link} className="flex-1 pb-2">
+                      {(() => {
+                        const link = generateLink(item)
+                        return link ? (
+                        <a href={link} className="flex-1 pb-2">
                           <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover cursor-pointer">
                             <div className="flex items-start justify-between gap-4 mb-2">
                               <div>
@@ -381,7 +388,9 @@ export function ExperiencePageContent() {
                             <p className="text-muted-foreground text-sm">{item.description}</p>
                           </div>
                         </div>
-                      )}
+                      )
+                      })()
+                      }
                     </div>
                   )
                 })}
