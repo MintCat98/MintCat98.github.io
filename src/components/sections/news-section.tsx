@@ -45,11 +45,13 @@ const newsData: NewsItem[] = [
   },
 ]
 
-// Sort news by date (newest first)
-const sortedNewsData = [...newsData].sort((a, b) => {
-  if (b.year !== a.year) return b.year - a.year
-  return b.month - a.month
-})
+// Sort news by date (newest first) and limit to max 10 items
+const sortedNewsData = [...newsData]
+  .sort((a, b) => {
+    if (b.year !== a.year) return b.year - a.year
+    return b.month - a.month
+  })
+  .slice(0, 10)
 
 // News card component to avoid duplication
 function NewsCard({ item, index }: { item: NewsItem; index: number }) {
