@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LinkableCard } from "@/components/ui/linkable-card"
+import { TechBadge } from "@/components/ui/tech-badge"
 import { cn } from "@/lib/utils"
 
 interface ProjectsSectionProps {
@@ -23,12 +24,19 @@ interface ProjectItem {
 const projects: ProjectItem[] = [
   {
     id: 1,
-    title: "SafeChat Framework",
-    description:
-      "An open-source framework for building trustworthy conversational AI systems with built-in safety guardrails",
-    tags: ["Python", "PyTorch", "Transformers"],
+    title: "CoDeMP: Color Description Multimodal Pipeline",
+    description: "",
+    tags: ["Python", "PyTorch", "Huggingface"],
     selected: false,
-    link: "#",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 2,
+    title: "Code Refactoring: Folder APIs in storage-proxy in Backend.Al",
+    description: "",
+    tags: ["Python", "aiohttp"],
+    selected: true,
+    link: "https://github.com/lablup/backend.ai/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Aclosed+author%3AMintCat98",
     image: "/placeholder.svg",
   },
 ]
@@ -75,9 +83,7 @@ export function ProjectsSection({ highlightId }: ProjectsSectionProps) {
         <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{project.description}</p>
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
-            <span key={tag} className="px-2 py-1 rounded text-xs bg-secondary text-secondary-foreground">
-              {tag}
-            </span>
+            <TechBadge key={tag} name={tag} />
           ))}
         </div>
       </div>
