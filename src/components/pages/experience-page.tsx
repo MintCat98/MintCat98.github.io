@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react"
 import { GraduationCap, Briefcase, FlaskConical, ChevronDown, ChevronUp } from "lucide-react"
 import { Footer } from "@/components/footer"
+import { LinkableCard } from "@/components/ui/linkable-card"
 
 type ExperienceCategory = "education" | "work" | "research"
 
@@ -247,6 +248,43 @@ const formatPeriod = (startDate: string, endDate?: string): string => {
   return `${startDate} - ${endDate}`
 }
 
+// Timeline card component to avoid duplication
+function TimelineCard({ item }: { item: TimelineItem }) {
+  const config = categoryConfig[item.category]
+  const Icon = config.icon
+  const link = generateLink(item)
+
+  return (
+    <div className="relative flex gap-6 group">
+      {/* Timeline dot */}
+      <div
+        className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center ${config.bgColor} border-2 ${config.color} shrink-0 transition-transform duration-300 group-hover:scale-110`}
+      >
+        <Icon className={`w-4 h-4 ${config.color}`} />
+      </div>
+
+      {/* Content */}
+      <LinkableCard link={link} unstyled sameTab className="flex-1 pb-2">
+        <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
+          <div className="flex items-start justify-between gap-4 mb-2">
+            <div>
+              <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
+              <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
+                {item.title}
+              </h3>
+              <p className="text-primary text-sm">{item.organization}</p>
+            </div>
+            <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
+              {config.label}
+            </span>
+          </div>
+          <p className="text-muted-foreground text-sm">{item.description}</p>
+        </div>
+      </LinkableCard>
+    </div>
+  )
+}
+
 export function ExperiencePageContent() {
   const [showAll, setShowAll] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
@@ -277,123 +315,15 @@ export function ExperiencePageContent() {
           <div className="absolute left-[19px] top-0 bottom-0 w-0.5 bg-border" />
 
           <div className="space-y-6">
-            {sortedItems.slice(0, 5).map((item, index) => {
-              const config = categoryConfig[item.category]
-              const Icon = config.icon
-
-              return (
-                <div key={`${item.startDate}-${item.title}-${index}`} className="relative flex gap-6 group">
-                  {/* Timeline dot */}
-                  <div
-                    className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center ${config.bgColor} border-2 ${config.color} shrink-0 transition-transform duration-300 group-hover:scale-110`}
-                  >
-                    <Icon className={`w-4 h-4 ${config.color}`} />
-                  </div>
-
-                  {/* Content */}
-                  {(() => {
-                    const link = generateLink(item)
-                    return link ? (
-                    <a href={link} className="flex-1 pb-2">
-                      <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover cursor-pointer">
-                        <div className="flex items-start justify-between gap-4 mb-2">
-                          <div>
-                            <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
-                            <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
-                              {item.title}
-                            </h3>
-                            <p className="text-primary text-sm">{item.organization}</p>
-                          </div>
-                          <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
-                            {config.label}
-                          </span>
-                        </div>
-                        <p className="text-muted-foreground text-sm">{item.description}</p>
-                      </div>
-                    </a>
-                  ) : (
-                    <div className="flex-1 pb-2">
-                      <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
-                        <div className="flex items-start justify-between gap-4 mb-2">
-                          <div>
-                            <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
-                            <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
-                              {item.title}
-                            </h3>
-                            <p className="text-primary text-sm">{item.organization}</p>
-                          </div>
-                          <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
-                            {config.label}
-                          </span>
-                        </div>
-                        <p className="text-muted-foreground text-sm">{item.description}</p>
-                      </div>
-                    </div>
-                  )
-                  })()
-                  }
-                </div>
-              )
-            })}
+            {sortedItems.slice(0, 5).map((item, index) => (
+              <TimelineCard key={`${item.startDate}-${item.title}-${index}`} item={item} />
+            ))}
 
             {showAll && (
               <div className={isAnimating ? "animate-expand space-y-6" : "space-y-6"}>
-                {hiddenItems.map((item, index) => {
-                  const config = categoryConfig[item.category]
-                  const Icon = config.icon
-
-                  return (
-                    <div key={`hidden-${item.startDate}-${item.title}-${index}`} className="relative flex gap-6 group">
-                      <div
-                        className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center ${config.bgColor} border-2 ${config.color} shrink-0 transition-transform duration-300 group-hover:scale-110`}
-                      >
-                        <Icon className={`w-4 h-4 ${config.color}`} />
-                      </div>
-
-                      {(() => {
-                        const link = generateLink(item)
-                        return link ? (
-                        <a href={link} className="flex-1 pb-2">
-                          <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover cursor-pointer">
-                            <div className="flex items-start justify-between gap-4 mb-2">
-                              <div>
-                                <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
-                                <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
-                                  {item.title}
-                                </h3>
-                                <p className="text-primary text-sm">{item.organization}</p>
-                              </div>
-                              <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
-                                {config.label}
-                              </span>
-                            </div>
-                            <p className="text-muted-foreground text-sm">{item.description}</p>
-                          </div>
-                        </a>
-                      ) : (
-                        <div className="flex-1 pb-2">
-                          <div className="glass rounded-lg p-5 transition-all duration-300 group-hover:border-primary/30 card-hover">
-                            <div className="flex items-start justify-between gap-4 mb-2">
-                              <div>
-                                <span className="text-xs text-muted-foreground">{formatPeriod(item.startDate, item.endDate)}</span>
-                                <h3 className="text-foreground font-semibold group-hover:text-primary transition-colors duration-300">
-                                  {item.title}
-                                </h3>
-                                <p className="text-primary text-sm">{item.organization}</p>
-                              </div>
-                              <span className={`px-2 py-1 rounded text-xs font-medium ${config.bgColor} ${config.color}`}>
-                                {config.label}
-                              </span>
-                            </div>
-                            <p className="text-muted-foreground text-sm">{item.description}</p>
-                          </div>
-                        </div>
-                      )
-                      })()
-                      }
-                    </div>
-                  )
-                })}
+                {hiddenItems.map((item, index) => (
+                  <TimelineCard key={`hidden-${item.startDate}-${item.title}-${index}`} item={item} />
+                ))}
               </div>
             )}
           </div>
@@ -443,8 +373,4 @@ export function ExperiencePageContent() {
     </div>
   )
 }
-
-      function setIsAnimating(arg0: boolean) {
-        throw new Error("Function not implemented.")
-      }
 

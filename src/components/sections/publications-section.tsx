@@ -29,7 +29,6 @@ const publications: PublicationItem[] = [
     venue: "CHI 2026 Submitted",
     year: 2025,
     selected: false,
-    link: "#",
     image: "placeholder.svg",
   },
 ]

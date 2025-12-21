@@ -3,6 +3,7 @@
 import { useState, useRef } from "react"
 import { Calendar, ChevronDown, ChevronUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LinkableCard } from "@/components/ui/linkable-card"
 
 // News type categories
 export type NewsType = "publication" | "talk" | "project" | "award" | "collaboration" | "press" | "notice"
@@ -53,10 +54,14 @@ const sortedNewsData = [...newsData]
   })
   .slice(0, 10)
 
-// News card component to avoid duplication
-function NewsCard({ item, index }: { item: NewsItem; index: number }) {
-  const cardContent = (
-    <>
+// News card component using LinkableCard
+function NewsCard({ item }: { item: NewsItem }) {
+  return (
+    <LinkableCard
+      link={item.link}
+      unstyled
+      className="flex items-start gap-4 p-4 rounded-lg bg-card/50 hover:bg-card border border-transparent hover:border-primary/20 transition-all duration-300 card-hover"
+    >
       <div className="flex items-center gap-2 text-muted-foreground text-sm min-w-[100px]">
         <Calendar className="w-4 h-4" />
         {item.date}
@@ -67,30 +72,7 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
       <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${typeColors[item.type]}`}>
         {item.type}
       </span>
-    </>
-  )
-
-  const baseClassName = "flex items-start gap-4 p-4 rounded-lg bg-card/50 hover:bg-card border border-transparent hover:border-primary/20 transition-all duration-300 card-hover"
-
-  if (item.link) {
-    return (
-      <a
-        key={index}
-        href={item.link}
-        className={`${baseClassName} cursor-pointer`}
-      >
-        {cardContent}
-      </a>
-    )
-  }
-
-  return (
-    <div
-      key={index}
-      className={`${baseClassName} cursor-default`}
-    >
-      {cardContent}
-    </div>
+    </LinkableCard>
   )
 }
 
@@ -116,14 +98,14 @@ export function NewsSection({
         <h2 className="text-2xl font-bold text-foreground mb-8 text-center">{title}</h2>
         <div className="space-y-3" ref={contentRef}>
           {sortedNewsData.slice(0, initialDisplayCount).map((item, index) => (
-            <NewsCard key={index} item={item} index={index} />
+            <NewsCard key={index} item={item} />
           ))}
 
           {showAll && (
             <div className={isAnimating ? "animate-expand" : ""}>
               {hiddenNews.map((item, index) => (
                 <div key={index} className="mt-3">
-                  <NewsCard item={item} index={index + initialDisplayCount} />
+                  <NewsCard item={item} />
                 </div>
               ))}
             </div>
