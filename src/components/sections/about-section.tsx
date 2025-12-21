@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Mail, Github, Linkedin, ChevronDown, ChevronUp, NotebookPen, FileUser } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 
 const socialLinks = [
   { icon: Mail, href: "mailto:mintcat@kaist.ac.kr", label: "Email" },
@@ -80,19 +81,39 @@ export function AboutSection() {
         </div>
 
         <div className="flex items-center gap-3 mt-8">
-          {socialLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="social-btn"
-              aria-label={link.label}
-              target={!link.href.startsWith("mailto:") ? "_blank" : undefined}
-              rel={!link.href.startsWith("mailto:") ? "noopener noreferrer" : undefined}
-            >
-              <link.icon className="w-4 h-4 shrink-0" />
-              <span className="btn-label text-sm font-medium">{link.label}</span>
-            </a>
-          ))}
+          {socialLinks.map((link) => {
+            const linkElement = (
+              <a
+                key={link.label}
+                href={link.href}
+                className="social-btn"
+                aria-label={link.label}
+                target={!link.href.startsWith("mailto:") ? "_blank" : undefined}
+                rel={!link.href.startsWith("mailto:") ? "noopener noreferrer" : undefined}
+              >
+                <link.icon className="w-4 h-4 shrink-0" />
+                <span className="btn-label text-sm font-medium">{link.label}</span>
+              </a>
+            )
+
+            if (link.label === "Blog") {
+              return (
+                <Tooltip key={link.label}>
+                  <TooltipTrigger asChild>{linkElement}</TooltipTrigger>
+                  <TooltipContent 
+                    side="bottom" 
+                    sideOffset={0}
+                    className="bg-muted text-muted-foreground border border-border"
+                    arrowClassName="bg-muted fill-muted"
+                  >
+                    <p>Korean only</p>
+                  </TooltipContent>
+                </Tooltip>
+              )
+            }
+
+            return linkElement
+          })}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 w-full text-left">
