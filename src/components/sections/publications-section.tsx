@@ -13,9 +13,10 @@ interface PublicationsSectionProps {
 interface PublicationItem {
   id: number
   title: string
-  authors: string
+  authors: React.ReactNode
   venue: string
   year: number
+  month: number // 1-12, 내부 정렬용
   selected: boolean
   link?: string
   image: string
@@ -25,17 +26,56 @@ const publications: PublicationItem[] = [
   {
     id: 1,
     title: "Easy Come, Easy Go? Exploring Perceptions and Effects of LLM-Based Search-as-Learning Across Students and Educators",
-    authors: "Yeonsun Yang, Ahyeon Shin, Mincheol Kang, Jiheon Kang, Xu Wang, and Jean Song",
-    venue: "CHI 2026 Submitted",
+    authors: (
+      <>
+      Yeonsun Yang, Ahyeon Shin, <b>Mincheol Kang</b>, Jiheon Kang, Xu Wang, and <sup>†</sup>Jean Song
+      </>
+    ),
+    venue: "CHI26 Submitted",
     year: 2025,
+    month: 9,
+    selected: false,
+    image: "placeholder.svg",
+  },
+  {
+    id: 2,
+    title: "GOM: Guided Occupancy World Model for Robust Planning in Safety-Critical Scenarios",
+    authors: (
+      <>
+      <sup>*</sup>Sihyeong Lee, <sup>*</sup><b>Mincheol Kang</b>, and <sup>†</sup>Daehee Park
+      </>
+    ),
+    venue: "CVPR26 Submitted",
+    year: 2025,
+    month: 11,
+    selected: false,
+    image: "placeholder.svg",
+  },
+  {
+    id: 3,
+    title: "BitTP: The Lightweight Trajectory Prediction Model with BitLLM for Edge-Devices",
+    authors: (
+      <>
+      <sup>*</sup><b>Mincheol Kang</b>, <sup>*</sup>Hyeonjin Lim, Bomin Kang, and <sup>†</sup>Daehee Park
+      </>
+    ),
+    venue: "CVPR26 Submitted",
+    year: 2025,
+    month: 11,
     selected: false,
     image: "placeholder.svg",
   },
 ]
 
+// year와 month 기준 최신순 정렬
+const sortedPublications = [...publications].sort((a, b) => {
+  if (b.year !== a.year) return b.year - a.year
+  return b.month - a.month
+})
+
 export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
   const [showSelectedOnly, setShowSelectedOnly] = useState(false)
-  const displayedPubs = showSelectedOnly ? publications.filter((p) => p.selected) : publications
+  const displayedPubs = showSelectedOnly ? sortedPublications.filter((p) => p.selected) : sortedPublications
   const highlightRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -84,7 +124,7 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
     <section id="publications">
       <div className="flex items-center justify-between mb-6">
         <p className="text-muted-foreground text-sm">
-          {publications.length} publications • {publications.filter((p) => p.selected).length} selected
+          {sortedPublications.length} publications • {sortedPublications.filter((p) => p.selected).length} selected
         </p>
         <Button
           variant="outline"
