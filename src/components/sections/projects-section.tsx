@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LinkableCard } from "@/components/ui/linkable-card"
 import { cn } from "@/lib/utils"
 
 interface ProjectsSectionProps {
@@ -106,35 +107,20 @@ export function ProjectsSection({ highlightId }: ProjectsSectionProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {displayedProjects.map((project) => {
-          const cardClasses = cn(
-            "group block rounded-xl border bg-card overflow-hidden transition-all duration-300",
-            "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
-            project.selected ? "border-primary/30 bg-primary/5" : "border-border",
-            project.id === highlightId && "highlight-card",
-          )
-
-          return project.link ? (
-            <a
-              key={project.id}
-              ref={project.id === highlightId ? highlightRef as React.RefObject<HTMLAnchorElement> : null}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(cardClasses, "cursor-pointer")}
-            >
-              <CardContent project={project} />
-            </a>
-          ) : (
-            <div
-              key={project.id}
-              ref={project.id === highlightId ? highlightRef : null}
-              className={cardClasses}
-            >
-              <CardContent project={project} />
-            </div>
-          )
-        })}
+        {displayedProjects.map((project) => (
+          <LinkableCard
+            key={project.id}
+            ref={project.id === highlightId ? highlightRef : null}
+            link={project.link}
+            className={cn(
+              "overflow-hidden",
+              project.selected ? "border-primary/30 bg-primary/5" : "border-border",
+              project.id === highlightId && "highlight-card",
+            )}
+          >
+            <CardContent project={project} />
+          </LinkableCard>
+        ))}
       </div>
     </section>
   )

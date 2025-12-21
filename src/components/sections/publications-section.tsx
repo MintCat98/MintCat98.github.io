@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LinkableCard } from "@/components/ui/linkable-card"
 import { cn } from "@/lib/utils"
 
 interface PublicationsSectionProps {
@@ -103,35 +104,19 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
       </div>
 
       <div className="space-y-4">
-        {displayedPubs.map((pub) => {
-          const cardClasses = cn(
-            "group block rounded-xl border bg-card transition-all duration-300",
-            "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
-            pub.selected ? "border-primary/30 bg-primary/5" : "border-border",
-            pub.id === highlightId && "highlight-card",
-          )
-
-          return pub.link ? (
-            <a
-              key={pub.id}
-              ref={pub.id === highlightId ? highlightRef as React.RefObject<HTMLAnchorElement> : null}
-              href={pub.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(cardClasses, "cursor-pointer")}
-            >
-              <CardContent pub={pub} />
-            </a>
-          ) : (
-            <div
-              key={pub.id}
-              ref={pub.id === highlightId ? highlightRef : null}
-              className={cardClasses}
-            >
-              <CardContent pub={pub} />
-            </div>
-          )
-        })}
+        {displayedPubs.map((pub) => (
+          <LinkableCard
+            key={pub.id}
+            ref={pub.id === highlightId ? highlightRef : null}
+            link={pub.link}
+            className={cn(
+              pub.selected ? "border-primary/30 bg-primary/5" : "border-border",
+              pub.id === highlightId && "highlight-card",
+            )}
+          >
+            <CardContent pub={pub} />
+          </LinkableCard>
+        ))}
       </div>
     </section>
   )

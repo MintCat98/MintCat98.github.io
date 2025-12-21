@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight, Trophy, Medal, Award, Icon, type LucideIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LinkableCard } from "@/components/ui/linkable-card"
 import { cn } from "@/lib/utils"
 
 interface AwardsSectionProps {
@@ -200,35 +201,19 @@ export function AwardsSection({ highlightId }: AwardsSectionProps) {
       </div>
 
       <div className="space-y-4">
-        {displayedAwards.map((award) => {
-          const cardClasses = cn(
-            "group block rounded-xl border bg-card transition-all duration-300",
-            "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
-            award.selected ? "border-primary/30 bg-primary/5" : "border-border",
-            award.id === highlightId && "highlight-card",
-          )
-
-          return award.link ? (
-            <a
-              key={award.id}
-              ref={award.id === highlightId ? highlightRef as unknown as React.RefObject<HTMLAnchorElement> : null}
-              href={award.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(cardClasses, "cursor-pointer")}
-            >
-              <CardContent award={award} />
-            </a>
-          ) : (
-            <div
-              key={award.id}
-              ref={award.id === highlightId ? highlightRef : null}
-              className={cardClasses}
-            >
-              <CardContent award={award} />
-            </div>
-          )
-        })}
+        {displayedAwards.map((award) => (
+          <LinkableCard
+            key={award.id}
+            ref={award.id === highlightId ? highlightRef : null}
+            link={award.link}
+            className={cn(
+              award.selected ? "border-primary/30 bg-primary/5" : "border-border",
+              award.id === highlightId && "highlight-card",
+            )}
+          >
+            <CardContent award={award} />
+          </LinkableCard>
+        ))}
       </div>
     </section>
   )

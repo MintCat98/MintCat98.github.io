@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight, Mic, Newspaper } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LinkableCard } from "@/components/ui/linkable-card"
 import { cn } from "@/lib/utils"
 
 interface PressSectionProps {
@@ -45,8 +46,8 @@ export function PressSection({ highlightId }: PressSectionProps) {
   }, [highlightId])
 
   const CardContent = ({ item }: { item: PressItem }) => (
-    <div className="flex items-stretch">
-      <div className="hidden sm:block w-48 shrink-0 overflow-hidden rounded-l-xl">
+    <div className="flex items-start">
+      <div className="hidden sm:block w-48 h-48 shrink-0 overflow-hidden rounded-l-xl">
         <img
           src={item.image || "/placeholder.svg"}
           alt={item.title}
@@ -112,35 +113,19 @@ export function PressSection({ highlightId }: PressSectionProps) {
       </div>
 
       <div className="space-y-4">
-        {displayedItems.map((item) => {
-          const cardClasses = cn(
-            "group block rounded-xl border bg-card transition-all duration-300",
-            "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/40 hover:-translate-y-1",
-            item.selected ? "border-primary/30 bg-primary/5" : "border-border",
-            item.id === highlightId && "highlight-card",
-          )
-
-          return item.link ? (
-            <a
-              key={item.id}
-              ref={item.id === highlightId ? highlightRef as React.RefObject<HTMLAnchorElement> : null}
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(cardClasses, "cursor-pointer")}
-            >
-              <CardContent item={item} />
-            </a>
-          ) : (
-            <div
-              key={item.id}
-              ref={item.id === highlightId ? highlightRef : null}
-              className={cardClasses}
-            >
-              <CardContent item={item} />
-            </div>
-          )
-        })}
+        {displayedItems.map((item) => (
+          <LinkableCard
+            key={item.id}
+            ref={item.id === highlightId ? highlightRef : null}
+            link={item.link}
+            className={cn(
+              item.selected ? "border-primary/30 bg-primary/5" : "border-border",
+              item.id === highlightId && "highlight-card",
+            )}
+          >
+            <CardContent item={item} />
+          </LinkableCard>
+        ))}
       </div>
     </section>
   )
