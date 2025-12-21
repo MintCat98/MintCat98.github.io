@@ -36,7 +36,7 @@ const timelineItems: TimelineItem[] = [
         • Thesis: <i>"CoDeMP: Color Description Multimodal Pipeline"</i>
       </>
     ),
-    workTab: "publications",
+    workTab: "projects",
     highlightId: 1,
   },
   {
@@ -56,8 +56,6 @@ const timelineItems: TimelineItem[] = [
         • Thesis: <i>"-"</i>
       </>
     ),
-    workTab: "publications",
-    highlightId: 2,
   },
   {
     category: "education",
@@ -88,11 +86,11 @@ const timelineItems: TimelineItem[] = [
     description: (
       <>
         • Advisor: <i><a href="https://jyskwon.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. Jean Y. Song</a></i><br />
-        Co-authored <i>"Can We Delegate Learning to Automation?: A Comparative Study of LLM Chatbots, Search Engines, and Books"</i> as the second author, focusing on the design and execution of user studies.
+        Co-authored <i>"Easy Come, Easy Go? Exploring Perceptions and Effects of LLM-Based Search-as-Learning Across Students and Educators"</i> as the second author, focusing on the design and execution of user studies.
       </>
     ),
     workTab: "publications",
-    highlightId: 3,
+    highlightId: 1,
   },
   {
     category: "research",
@@ -110,8 +108,6 @@ const timelineItems: TimelineItem[] = [
         Focused on building a comprehensive theoretical foundation in cryptography, ranging from classical security to post-quantum cryptography.
       </>
     ),
-    workTab: "publications",
-    highlightId: 3,
   },
   {
     category: "research",
@@ -130,7 +126,7 @@ const timelineItems: TimelineItem[] = [
       </>
     ),
     workTab: "publications",
-    highlightId: 3,
+    highlightId: 2,
   },
   {
     category: "work",
@@ -149,8 +145,8 @@ const timelineItems: TimelineItem[] = [
         , an enterprise-grade open-source platform for AI/GPU resource orchestration.
       </>
     ),
-    workTab: "publications",
-    highlightId: 3,
+    workTab: "projects",
+    highlightId: 2,
   },
   {
     category: "work",
@@ -167,7 +163,7 @@ const timelineItems: TimelineItem[] = [
         Cohort 3 & 4: Empowering student communities at DGIST <i>(2024-2025)</i> and KAIST <i>(2026)</i> to optimize digital workflows and productivity.
       </>
     ),
-    workTab: "publications",
+    workTab: "press",
     highlightId: 3,
   },
   {

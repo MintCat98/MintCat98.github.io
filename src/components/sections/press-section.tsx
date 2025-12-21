@@ -22,7 +22,7 @@ interface PressItem {
 }
 
 const pressItems: PressItem[] = [
-  // 노션 오프보딩 발표, CUop 후기 발표, 개발자 기초 강의, Notion 초심자 강의
+  // 노션 오프보딩 발표, CUop 후기 발표, 개발자 기초 강의, Notion 초심자 강의, 가배향 부장, 아이디어톤 우승
   {
     id: 1,
     title: "The Future of AI Safety: A Conversation with Dr. Alex Chen",
