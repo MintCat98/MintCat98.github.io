@@ -23,10 +23,10 @@ interface PublicationItem {
 const publications: PublicationItem[] = [
   {
     id: 1,
-    title: "Aligning Large Language Models with Human Preferences via Constitutional AI",
-    authors: "Alex Chen*, Sarah Kim*, James Liu, Emily Wang",
-    venue: "NeurIPS 2024",
-    year: 2024,
+    title: "Easy Come, Easy Go? Exploring Perceptions and Effects of LLM-Based Search-as-Learning Across Students and Educators",
+    authors: "Yeonsun Yang, Ahyeon Shin, Mincheol Kang, Jiheon Kang, Xu Wang, and Jean Song",
+    venue: "CHI 2026 Submitted",
+    year: 2025,
     selected: false,
     link: "#",
     image: "placeholder.svg",
@@ -45,8 +45,8 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
   }, [highlightId])
 
   const CardContent = ({ pub }: { pub: PublicationItem }) => (
-    <div className="flex items-stretch">
-      <div className="hidden sm:block w-48 shrink-0 overflow-hidden rounded-l-xl">
+    <div className="flex items-start">
+      <div className="hidden sm:block w-48 h-48 shrink-0 overflow-hidden rounded-l-xl">
         <img
           src={pub.image || "/placeholder.svg"}
           alt={pub.title}
