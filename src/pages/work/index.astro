@@ -1,4 +1,10 @@
 ---
-// /work로 접근 시 /work/publications로 리다이렉트
-return Astro.redirect('/work/publications')
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import { WorkApp } from "../../components/pages/work-app"
+
+const pathname = Astro.url.pathname
+const title = "Publications | Work | Mincheol Kang"
 ---
+<BaseLayout title={title} description="Selected projects and research work">
+  <WorkApp pathname={pathname} activeTab="publications" client:load />
+</BaseLayout>
