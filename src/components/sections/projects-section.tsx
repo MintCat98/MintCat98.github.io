@@ -44,7 +44,7 @@ const projectsData: ProjectItem[] = [
   },
   {
     id: 2,
-    title: "Code Refactoring: Folder APIs in storage-proxy in Backend.Al",
+    title: "Code Refactoring: Folder APIs in storage-proxy in Backend.AI",
     description: (
       <>
       Refactored Backend.AI's vFolder APIs by implementing a modular service layer and layered architecture in storage-proxy. Improved system maintainability and type safety through Pydantic-based validation and module optimization.

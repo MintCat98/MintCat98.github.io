@@ -41,7 +41,7 @@ const newsData: NewsItem[] = [
     year: 2025,
     month: 12,
     date: "Dec 2025",
-    content: "🛠️ Working in progress",
+    content: "🥳 Launched my website to share my journey!",
     type: "notice",
   },
 ]
