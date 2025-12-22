@@ -264,6 +264,11 @@ export function HighlightsSection() {
                     <img
                       src={item.image}
                       alt={item.title}
+                      width={400}
+                      height={225}
+                      loading={index < 2 ? "eager" : "lazy"}
+                      decoding="async"
+                      fetchPriority={index < 2 ? "high" : "auto"}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {/* 하단 그림자 오버레이 */}

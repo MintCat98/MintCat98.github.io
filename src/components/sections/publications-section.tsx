@@ -90,6 +90,8 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
         <img
           src={pub.image || "/placeholder.svg"}
           alt={pub.title}
+          width={192}
+          height={192}
           loading="lazy"
           decoding="async"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

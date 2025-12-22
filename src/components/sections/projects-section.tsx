@@ -101,8 +101,11 @@ export function ProjectsSection({ highlightId }: ProjectsSectionProps) {
         <img
           src={project.image || "/placeholder.svg"}
           alt={project.title}
+          width={400}
+          height={144}
           loading={index < 2 ? "eager" : "lazy"}
           decoding="async"
+          fetchPriority={index < 2 ? "high" : "auto"}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
