@@ -157,8 +157,8 @@ export function PressSection({ highlightId }: PressSectionProps) {
   }, [highlightId])
 
   const CardContent = ({ item }: { item: PressItem }) => (
-    <div className="flex items-start">
-      <div className="hidden sm:block w-48 h-48 shrink-0 overflow-hidden rounded-l-xl">
+    <div className="flex items-stretch">
+      <div className="hidden sm:block w-48 min-h-48 shrink-0 overflow-hidden rounded-l-xl">
         <img
           src={item.image || "/placeholder.svg"}
           alt={item.title}
