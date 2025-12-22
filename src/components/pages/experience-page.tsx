@@ -4,6 +4,7 @@ import { useState, useMemo } from "react"
 import { GraduationCap, Briefcase, FlaskConical, ChevronDown, ChevronUp } from "lucide-react"
 import { Footer } from "@/components/footer"
 import { LinkableCard } from "@/components/ui/linkable-card"
+import { ScrollToTop } from "@/components/ui/scroll-to-top"
 
 type ExperienceCategory = "education" | "work" | "research"
 
@@ -347,7 +348,7 @@ export function ExperiencePageContent() {
         </div>
 
         {/* Legend */}
-        <div className="fixed bottom-6 right-6 glass rounded-lg p-4 hidden lg:block">
+        <div className="fixed bottom-20 right-6 glass rounded-lg p-4 hidden lg:block">
           <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Legend</h4>
           <div className="space-y-2">
             {Object.entries(categoryConfig).map(([key, config]) => {
@@ -363,6 +364,8 @@ export function ExperiencePageContent() {
             })}
           </div>
         </div>
+
+        <ScrollToTop className="bottom-6 right-6" />
       </div>
         <Footer />
       </div>

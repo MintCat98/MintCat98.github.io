@@ -5,6 +5,7 @@ import { HighlightsSection } from "@/components/sections/highlights-section"
 import { NewsSection } from "@/components/sections/news-section"
 import { Footer } from "@/components/footer"
 import { ScrollIndicator } from "@/components/ui/scroll-indicator"
+import { ScrollToTop } from "@/components/ui/scroll-to-top"
 
 export function HomePageContent() {
   return (
@@ -30,6 +31,8 @@ export function HomePageContent() {
       </section>
 
       <Footer />
+
+      <ScrollToTop showAfterSectionId="highlights" className="bottom-6 right-6" />
     </div>
   )
 }

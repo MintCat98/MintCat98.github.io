@@ -6,6 +6,7 @@ import { ProjectsSection } from "@/components/sections/projects-section"
 import { PressSection } from "@/components/sections/press-section"
 import { AwardsSection } from "@/components/sections/awards-section"
 import { Footer } from "@/components/footer"
+import { ScrollToTop } from "@/components/ui/scroll-to-top"
 
 const tabs = [
   { id: "publications", label: "Publications" },
@@ -80,6 +81,9 @@ export function WorkPageContent() {
             {activeTab === "awards" && <AwardsSection highlightId={highlightId} />}
           </div>
         </div>
+
+        <ScrollToTop className="bottom-6 right-6" />
+
         <Footer />
       </div>
     </div>
