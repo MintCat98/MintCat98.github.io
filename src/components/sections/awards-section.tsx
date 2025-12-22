@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Star, ChevronRight, Trophy, Medal, Award, Icon, type LucideIcon } from "lucide-react"
+import { Star, ChevronRight, Trophy, Medal, Award, type LucideIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LinkableCard } from "@/components/ui/linkable-card"
 import { cn } from "@/lib/utils"
@@ -139,18 +139,26 @@ export function AwardsSection({ highlightId }: AwardsSectionProps) {
     }
   }, [highlightId])
 
-  const CardContent = ({ award }: { award: AwardItem }) => (
+  const CardContent = ({ award }: { award: AwardItem }) => {
+    const IconComponent = award.icon
+    return (
     <div className="flex items-start">
       <div className="hidden sm:block w-48 h-48 shrink-0 overflow-hidden rounded-l-xl">
-        <img
-          src={award.image || "/placeholder.svg"}
-          alt={award.title}
-          width={192}
-          height={192}
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+        {award.image ? (
+          <img
+            src={award.image}
+            alt={award.title}
+            width={192}
+            height={192}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full bg-muted/50 flex items-center justify-center">
+            <IconComponent className="w-16 h-16 text-muted-foreground/30" />
+          </div>
+        )}
       </div>
       <div className="flex-1 p-5">
         <div className="flex items-start justify-between gap-4">
@@ -166,7 +174,8 @@ export function AwardsSection({ highlightId }: AwardsSectionProps) {
                 {new Date(award.year, award.month - 1).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
               </span>
             </div>
-            <h3 className="text-foreground font-medium mb-1 leading-snug group-hover:text-primary transition-colors">
+            <h3 className="text-foreground font-medium mb-1 leading-snug group-hover:text-primary transition-colors flex items-center gap-2">
+              <IconComponent className="w-4 h-4 text-primary shrink-0" />
               {award.title}
             </h3>
             <p className="text-primary text-sm mb-1">{award.organization}</p>
@@ -178,7 +187,7 @@ export function AwardsSection({ highlightId }: AwardsSectionProps) {
         </div>
       </div>
     </div>
-  )
+  )}
 
   return (
     <section id="awards">
