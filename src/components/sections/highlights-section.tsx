@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { FileText, FolderOpen, Award, ArrowRight, MicIcon, ChevronLeft, ChevronRight } from "lucide-react"
+import { FileText, FolderOpen, Award, ArrowRight, MicIcon } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
 const highlights = [
@@ -50,37 +50,48 @@ const highlights = [
 export function HighlightsSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
-  const isScrollingRef = useRef(false)
   const lastScrollTime = useRef(0)
 
   const totalItems = highlights.length
+  const isAtStart = activeIndex === 0
+  const isAtEnd = activeIndex === totalItems - 1
 
   const goToNext = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % totalItems)
+    setActiveIndex((prev) => Math.min(prev + 1, totalItems - 1))
   }, [totalItems])
 
   const goToPrev = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + totalItems) % totalItems)
-  }, [totalItems])
+    setActiveIndex((prev) => Math.max(prev - 1, 0))
+  }, [])
 
-  // 스크롤 기반 카드 전환
+  // 스크롤 기반 카드 전환 - 시작/끝에서만 페이지 스크롤 허용
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
 
     const handleWheel = (e: WheelEvent) => {
       const rect = section.getBoundingClientRect()
+      // 섹션이 화면 중앙에 있을 때만 캐러셀 스크롤 처리
       const isInView = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
 
       if (isInView) {
         const now = Date.now()
-        if (now - lastScrollTime.current < 400) return // 디바운스
-        
+        const isScrollingDown = e.deltaY > 0
+        const isScrollingUp = e.deltaY < 0
+
+        // 첫 번째 카드에서 위로 스크롤 또는 마지막 카드에서 아래로 스크롤 시 페이지 스크롤 허용
+        if ((isAtStart && isScrollingUp) || (isAtEnd && isScrollingDown)) {
+          return // 기본 스크롤 동작 허용
+        }
+
+        // 그 외에는 카드 전환
         if (Math.abs(e.deltaY) > 30) {
           e.preventDefault()
-          lastScrollTime.current = now
           
-          if (e.deltaY > 0) {
+          if (now - lastScrollTime.current < 400) return // 디바운스
+          lastScrollTime.current = now
+
+          if (isScrollingDown) {
             goToNext()
           } else {
             goToPrev()
@@ -91,41 +102,29 @@ export function HighlightsSection() {
 
     window.addEventListener("wheel", handleWheel, { passive: false })
     return () => window.removeEventListener("wheel", handleWheel)
-  }, [goToNext, goToPrev])
+  }, [goToNext, goToPrev, isAtStart, isAtEnd])
 
-  // 키보드 네비게이션
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-        goToNext()
-      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        goToPrev()
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [goToNext, goToPrev])
-
-  // 카드 위치와 스타일 계산
+  // 카드 위치와 스타일 계산 (비순환형)
   const getCardStyle = (index: number) => {
     const diff = index - activeIndex
-    // 순환 처리
-    let normalizedDiff = diff
-    if (diff > totalItems / 2) normalizedDiff = diff - totalItems
-    if (diff < -totalItems / 2) normalizedDiff = diff + totalItems
 
-    const isActive = normalizedDiff === 0
-    const isAdjacent = Math.abs(normalizedDiff) === 1
-    const isHidden = Math.abs(normalizedDiff) > 1
+    const isActive = diff === 0
+    const isAdjacent = Math.abs(diff) === 1
+    
+    // 첫 번째 카드에서는 왼쪽 카드 숨김, 마지막 카드에서는 오른쪽 카드 숨김
+    const shouldHide = Math.abs(diff) > 1
 
     // 기본 스타일
-    let translateX = normalizedDiff * 70 // 좌우 이동 (%)
+    let translateX = diff * 70 // 좌우 이동 (%)
     let translateZ = isActive ? 0 : isAdjacent ? -150 : -300 // 깊이
     let scale = isActive ? 1 : isAdjacent ? 0.8 : 0.6
     let opacity = isActive ? 1 : isAdjacent ? 0.5 : 0
     let zIndex = isActive ? 30 : isAdjacent ? 20 : 10
     let blur = isActive ? 0 : isAdjacent ? 2 : 4
+
+    if (shouldHide) {
+      opacity = 0
+    }
 
     return {
       transform: `translateX(${translateX}%) translateZ(${translateZ}px) scale(${scale})`,
@@ -193,22 +192,6 @@ export function HighlightsSection() {
               </div>
             ))}
           </div>
-
-          {/* 네비게이션 버튼 */}
-          <button
-            onClick={goToPrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 shadow-lg"
-            aria-label="Previous"
-          >
-            <ChevronLeft className="w-6 h-6 text-foreground" />
-          </button>
-          <button
-            onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 shadow-lg"
-            aria-label="Next"
-          >
-            <ChevronRight className="w-6 h-6 text-foreground" />
-          </button>
         </div>
         <br />
 
