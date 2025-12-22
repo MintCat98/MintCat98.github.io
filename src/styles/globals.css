@@ -296,3 +296,15 @@
 .link-underline:hover::after {
   width: 100%;
 }
+
+/* Swipe hint animation */
+@keyframes swipe {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(4px);
+    opacity: 1;
+  }
+}

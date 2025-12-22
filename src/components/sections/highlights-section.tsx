@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { FileText, FolderOpen, Award, ArrowRight, MicIcon } from "lucide-react"
+import { FileText, FolderOpen, Award, ArrowRight, MicIcon, ChevronRight } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
 const highlights = [
@@ -240,7 +240,13 @@ export function HighlightsSection() {
       className="flex flex-col items-center justify-center w-full"
       style={{ overflowX: "clip" }}
     >
-      <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Highlights</h2>
+      <h2 className="text-2xl font-bold text-foreground mb-4 text-center">Highlights</h2>
+
+      {/* 스크롤 힌트 - 옆으로 스와이프 애니메이션 */}
+      <div className="flex items-center gap-1.5 mb-2">
+        <span className="text-xs text-muted-foreground/60">Scroll to view more</span>
+        <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/40 animate-[swipe_1.5s_ease-in-out_infinite]" />
+      </div>
 
       {/* 3D 캐러셀 컨테이너 - 그림자를 위한 패딩 추가 */}
       <div className="relative h-[520px] w-full py-5" style={{ perspective: "1200px" }}>
