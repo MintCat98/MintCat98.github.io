@@ -212,12 +212,11 @@ const categoryConfig: Record<
 // Helper function to generate link from workTab and highlightId
 const generateLink = (item: TimelineItem): string => {
   if (!item.workTab) return ""
-  const params = new URLSearchParams()
-  params.set("tab", item.workTab)
+  let url = `/work/${item.workTab}`
   if (item.highlightId !== undefined) {
-    params.set("highlight", item.highlightId.toString())
+    url += `?highlight=${item.highlightId}`
   }
-  return `/work?${params.toString()}`
+  return url
 }
 
 // Helper function to parse date string to comparable value

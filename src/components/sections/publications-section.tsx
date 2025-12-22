@@ -35,7 +35,7 @@ const publications: PublicationItem[] = [
     year: 2025,
     month: 9,
     selected: false,
-    image: "placeholder.svg",
+    image: "/placeholder.svg",
   },
   {
     id: 2,
@@ -49,7 +49,7 @@ const publications: PublicationItem[] = [
     year: 2025,
     month: 11,
     selected: false,
-    image: "publications/cvpr26-gom.png",
+    image: "/publications/cvpr26-gom.png",
   },
   {
     id: 3,
@@ -63,7 +63,7 @@ const publications: PublicationItem[] = [
     year: 2025,
     month: 11,
     selected: false,
-    image: "publications/cvpr26-bittp.png",
+    image: "/publications/cvpr26-bittp.png",
   },
 ]
 

@@ -3,10 +3,15 @@
 import { PageShell } from "@/components/page-shell"
 import { WorkPageContent } from "@/components/pages/work-page"
 
-export function WorkApp({ pathname }: { pathname: string }) {
+interface WorkAppProps {
+  pathname: string
+  activeTab?: string
+}
+
+export function WorkApp({ pathname, activeTab = "publications" }: WorkAppProps) {
   return (
     <PageShell pathname={pathname}>
-      <WorkPageContent />
+      <WorkPageContent activeTab={activeTab} />
     </PageShell>
   )
 }

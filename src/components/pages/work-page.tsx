@@ -9,25 +9,23 @@ import { Footer } from "@/components/footer"
 import { ScrollToTop } from "@/components/ui/scroll-to-top"
 
 const tabs = [
-  { id: "publications", label: "Publications" },
-  { id: "projects", label: "Projects" },
-  { id: "press", label: "Press & Talks" },
-  { id: "awards", label: "Honors & Awards" },
+  { id: "publications", label: "Publications", href: "/work/publications" },
+  { id: "projects", label: "Projects", href: "/work/projects" },
+  { id: "press", label: "Press & Talks", href: "/work/press" },
+  { id: "awards", label: "Honors & Awards", href: "/work/awards" },
 ]
 
-export function WorkPageContent() {
-  const [activeTab, setActiveTab] = useState("publications")
+interface WorkPageContentProps {
+  activeTab?: string
+}
+
+export function WorkPageContent({ activeTab = "publications" }: WorkPageContentProps) {
   const [highlightId, setHighlightId] = useState<number | null>(null)
 
   useEffect(() => {
-    // Parse URL parameters on mount
+    // Parse URL parameters on mount for highlight
     const params = new URLSearchParams(window.location.search)
-    const tab = params.get("tab")
     const highlight = params.get("highlight")
-
-    if (tab && tabs.some((t) => t.id === tab)) {
-      setActiveTab(tab)
-    }
 
     if (highlight) {
       const id = parseInt(highlight, 10)
@@ -42,14 +40,7 @@ export function WorkPageContent() {
         return () => clearTimeout(timer)
       }
     }
-  }, [])
-
-  const handleTabChange = (tabId: string) => {
-    setActiveTab(tabId)
-    setHighlightId(null)
-    // Clean up URL params when manually changing tabs
-    window.history.replaceState({}, "", window.location.pathname)
-  }
+  }, [activeTab])
 
   return (
     <div id="snap-container" className="h-screen overflow-y-auto">
@@ -60,9 +51,9 @@ export function WorkPageContent() {
 
           <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
             {tabs.map((tab) => (
-              <button
+              <a
                 key={tab.id}
-                onClick={() => handleTabChange(tab.id)}
+                href={tab.href}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                   activeTab === tab.id
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
@@ -70,7 +61,7 @@ export function WorkPageContent() {
                 }`}
               >
                 {tab.label}
-              </button>
+              </a>
             ))}
           </div>
 

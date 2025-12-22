@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import { WorkApp } from "../../components/pages/work-app"
+
+export function getStaticPaths() {
+  return [
+    { params: { tab: 'publications' } },
+    { params: { tab: 'projects' } },
+    { params: { tab: 'press' } },
+    { params: { tab: 'awards' } },
+  ]
+}
+
+const { tab } = Astro.params
+const pathname = Astro.url.pathname
+
+const tabTitles: Record<string, string> = {
+  publications: 'Publications',
+  projects: 'Projects',
+  press: 'Press & Talks',
+  awards: 'Honors & Awards',
+}
+
+const title = `${tabTitles[tab || 'publications']} | Work | Mincheol Kang`
+---
+<BaseLayout title={title} description="Selected projects and research work">
+  <WorkApp pathname={pathname} activeTab={tab || 'publications'} client:load />
+</BaseLayout>

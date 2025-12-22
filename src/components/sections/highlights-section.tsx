@@ -11,7 +11,7 @@ const highlights = [
     title: "Featured Publication",
     subtitle: "",
     content: "New publications are in progress! Stay tuned for my latest research updates! 👀",
-    link: "/work?tab=publications",
+    link: "/work/publications",
     linkText: "See More Publications",
     image: "/publications/cvpr26-gom.png",
   },
@@ -21,7 +21,7 @@ const highlights = [
     title: "Featured Project",
     subtitle: "Open Source",
     content: "Code Refactoring: Folder APIs in storage-proxy in Backend.AI",
-    link: "/work?tab=projects",
+    link: "/work/projects",
     linkText: "See More Projects",
     image: "/projects/backendai-folder-api-refactor.png",
   },
@@ -31,7 +31,7 @@ const highlights = [
     title: "Featured Press & Talks",
     subtitle: "Notion",
     content: "Code Refactoring: Folder APIs in storage-proxy in Backend.AI",
-    link: "/work?tab=press",
+    link: "/work/press",
     linkText: "See More Press & Talks",
     image: "/presstalks/notion-offboarding.jpeg",
   },
@@ -41,7 +41,7 @@ const highlights = [
     title: "Featured Honor",
     subtitle: "2025",
     content: "Recognized as a top-tier undergraduate engineer for technical vision and scientific contributions!",
-    link: "/work?tab=awards",
+    link: "/work/awards",
     linkText: "See More Awards",
     image: "/awards/ipesk-next-generation-engineering-talent-2025.png",
   },
@@ -54,7 +54,7 @@ export function HighlightsSection() {
   const lastScrollTime = useRef(0)
   const lockedScrollTop = useRef(0)
   const bufferAccumulator = useRef(0) // 버퍼 스크롤 누적값
-  const bufferThreshold = 2500 // 섹션 전환을 위한 스크롤 누적 임계값
+  const bufferThreshold = 1800 // 섹션 전환을 위한 스크롤 누적 임계값
   const totalItems = highlights.length
 
   const isAtStart = activeIndex === 0
