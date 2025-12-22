@@ -54,7 +54,7 @@ export function HighlightsSection() {
   const lastScrollTime = useRef(0)
   const lockedScrollTop = useRef(0)
   const bufferAccumulator = useRef(0) // 버퍼 스크롤 누적값
-  const bufferThreshold = 1500 // 섹션 전환을 위한 스크롤 누적 임계값
+  const bufferThreshold = 2500 // 섹션 전환을 위한 스크롤 누적 임계값
   const totalItems = highlights.length
 
   const isAtStart = activeIndex === 0
@@ -79,14 +79,21 @@ export function HighlightsSection() {
     const snapContainer = document.getElementById("snap-container")
     if (!snapContainer) return
 
+    let lockTimeout: NodeJS.Timeout | null = null
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.intersectionRatio > 0.9) {
-            // 섹션이 보이면 스크롤 위치 저장하고 잠금
-            lockedScrollTop.current = snapContainer.scrollTop
-            setIsLocked(true)
+            // 섹션 진입 시 snap scroll 완료를 기다린 후 잠금
+            if (lockTimeout) clearTimeout(lockTimeout)
+            lockTimeout = setTimeout(() => {
+              lockedScrollTop.current = snapContainer.scrollTop
+              bufferAccumulator.current = 0 // 버퍼 리셋
+              setIsLocked(true)
+            }, 500) // snap 애니메이션 완료 대기
           } else {
+            if (lockTimeout) clearTimeout(lockTimeout)
             setIsLocked(false)
           }
         })
@@ -95,39 +102,29 @@ export function HighlightsSection() {
     )
 
     observer.observe(highlightsSection)
-    return () => observer.disconnect()
+    return () => {
+      if (lockTimeout) clearTimeout(lockTimeout)
+      observer.disconnect()
+    }
   }, [])
 
-  // 스크롤 잠금: 캐러셀 동작 중에는 스크롤 위치 고정
+  // 스크롤 잠금은 wheel 이벤트에서만 처리 (scroll 이벤트 핸들러 제거로 떨림 방지)
+  // 중간 카드일 때는 snap-scroll 자체를 비활성화
   useEffect(() => {
     const snapContainer = document.getElementById("snap-container")
     if (!snapContainer) return
 
-    if (!isLocked) {
-      snapContainer.style.overflow = ""
-      return
+    if (isLocked && !isAtStart && !isAtEnd) {
+      // 중간 카드: snap scroll 비활성화
+      snapContainer.style.scrollSnapType = "none"
+    } else {
+      // 경계 또는 잠금 해제: snap scroll 복원
+      snapContainer.style.scrollSnapType = ""
     }
 
-    // 스크롤이 발생하면 원래 위치로 되돌림
-    const lockScroll = () => {
-      if (isLocked && !isAtStart && !isAtEnd) {
-        // 중간 카드일 때만 스크롤 고정
-      }
+    return () => {
+      snapContainer.style.scrollSnapType = ""
     }
-
-    const handleScroll = () => {
-      // 첫 번째/마지막 카드가 아니면 스크롤 위치 고정
-      if (isLocked) {
-        if ((isAtStart) || (isAtEnd)) {
-          // 경계에서는 스크롤 허용
-        } else {
-          snapContainer.scrollTop = lockedScrollTop.current
-        }
-      }
-    }
-
-    snapContainer.addEventListener("scroll", handleScroll)
-    return () => snapContainer.removeEventListener("scroll", handleScroll)
   }, [isLocked, isAtStart, isAtEnd])
 
   // wheel 이벤트로 카드 전환
@@ -151,12 +148,9 @@ export function HighlightsSection() {
           return // 기본 스크롤 허용
         }
         
-        // 아직 임계값 미달 - 스크롤 막고 위치 고정
+        // 아직 임계값 미달 - 스크롤만 막음
         e.preventDefault()
         e.stopPropagation()
-        requestAnimationFrame(() => {
-          snapContainer.scrollTop = lockedScrollTop.current
-        })
         return
       }
 
@@ -170,12 +164,9 @@ export function HighlightsSection() {
           return // 기본 스크롤 허용
         }
         
-        // 아직 임계값 미달 - 스크롤 막고 위치 고정
+        // 아직 임계값 미달 - 스크롤만 막음
         e.preventDefault()
         e.stopPropagation()
-        requestAnimationFrame(() => {
-          snapContainer.scrollTop = lockedScrollTop.current
-        })
         return
       }
 
@@ -189,7 +180,7 @@ export function HighlightsSection() {
       e.stopPropagation()
 
       // 민감도 조절: deltaY가 충분히 커야 전환
-      if (Math.abs(e.deltaY) < 30) return
+      if (Math.abs(e.deltaY) < 25) return
 
       const now = Date.now()
       if (now - lastScrollTime.current < 600) return // 디바운스 시간 증가
@@ -200,11 +191,6 @@ export function HighlightsSection() {
       } else if (isScrollingUp) {
         goToPrev()
       }
-
-      // 스크롤 위치 강제 고정
-      requestAnimationFrame(() => {
-        snapContainer.scrollTop = lockedScrollTop.current
-      })
     }
 
     snapContainer.addEventListener("wheel", handleWheel, { passive: false })
