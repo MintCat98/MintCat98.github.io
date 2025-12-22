@@ -1,6 +1,6 @@
 "use client"
 
-import { FileText, FolderOpen, Award, ArrowRight } from "lucide-react"
+import { FileText, FolderOpen, Award, ArrowRight, MicIcon } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
 const highlights = [
@@ -23,6 +23,16 @@ const highlights = [
     link: "/work?tab=projects",
     linkText: "See More Projects",
     image: "/projects/backendai-folder-api-refactor.png",
+  },
+  {
+    id: "press",
+    icon: MicIcon,
+    title: "Featured Press & Talks",
+    subtitle: "Notion",
+    content: "Code Refactoring: Folder APIs in storage-proxy in Backend.AI",
+    link: "/work?tab=press",
+    linkText: "See More Press & Talks",
+    image: "/presstalks/notion-offboarding.jpeg",
   },
   {
     id: "awards",
