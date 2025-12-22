@@ -27,14 +27,13 @@ interface PressItem {
 }
 
 const pressItemsData: PressItem[] = [
-  // 노션 오프보딩 발표, CUop 후기 발표
   {
     id: 1,
-    title: "Dev class for beginners",
+    title: "Developer Essentials: Mastering Git & Notion",
     source: "DGIST",
     description: (
       <>
-        Conducted a foundational programming lecture series for freshmen at DGIST, covering topics such as
+        Led an 8-week intensive workshop for 16 DGIST undergraduates, covering Git and Notion from foundational concepts to real-world applications. Received highly positive feedback for enhancing student productivity and collaborative workflows across various engineering courses and group projects.
       </>
     ),
     type: "lecture",
@@ -43,15 +42,17 @@ const pressItemsData: PressItem[] = [
     endYear: 2023,
     endMonth: 5,
     selected: false,
-    image: "/placeholder.svg",
+    link: "https://mintcat.notion.site/12e55c0d3e0c81e18523f4173378be3a?v=12e55c0d3e0c8177b146000ca3cfb2b8&source=copy_link",
+    image: "/presstalks/dev-essentials.jpg",
   },
   {
     id: 2,
-    title: "Coffee",
+    title: "Club Spotlight: Representing DGIST's Coffee Community, Gabaehyang",
     source: "DGIST",
     description: (
       <>
-        Coffee
+        Represented DGIST's premier coffee club, Gabaehyang, in a featured media interview as its 10th President. 
+        Shared insights on professional bean selection—including blends and popular single origins like Ethiopia Yirgacheffe—and promoted a vibrant campus culture centered around coffee and conversation.
       </>
     ),
     type: "press",
@@ -59,15 +60,16 @@ const pressItemsData: PressItem[] = [
     startMonth: 5,
     selected: false,
     link: "https://dgistdna.com/716",
-    image: "/placeholder.svg",
+    image: "/presstalks/coffee-club-representative.png",
   },
   {
     id: 3,
-    title: "Notion class",
-    source: "DGIST",
+    title: "Campus-wide Workshop: Building Digital Workflows with Notion",
+    source: "DGIST and Notion",
     description: (
       <>
-        Notion class
+        Organized and led an official Notion workshop as a Notion Campus Leader, providing foundational training to about 40 university members, including students, staff, and faculty.
+        Focused on optimizing academic and administrative workflows by introducing customized templates and efficient workspace management systems for the DGIST community.
       </>
     ),
     type: "lecture",
@@ -75,39 +77,41 @@ const pressItemsData: PressItem[] = [
     startMonth: 11,
     selected: false,
     link: "https://luma.com/r74xd074",
-    image: "/placeholder.svg",
+    image: "/presstalks/notion-cl-class.jpg",
   },
   {
     id: 4,
-    title: "Lablup 후기",
-    source: "DGIST",
+    title: "From Researcher to Developer: My Lablup Internship Journey",
+    source: "DGIST and Lablup",
     description: (
       <>
-        Notion class
+        Presented a retrospective on my backend engineering internship at Lablup Inc. to DGIST peers, focusing on the transition from an undergraduate researcher to a junior developer.
+        Shared technical insights from resolving 9 issues and merging 8 PRs on Backend.AI, emphasizing growth in collaborative workflows and proficiency in Docker and Git.
       </>
     ),
     type: "talk",
     startYear: 2025,
     startMonth: 5,
     selected: false,
-    link: "",
-    image: "/placeholder.svg",
+    link: "https://www.figma.com/deck/vO1lbWPNgrECUl7wru57zN/%EB%9E%98%EB%B8%94%EC%97%85-%ED%9B%84%EA%B8%B0-%EB%B0%9C%ED%91%9C?node-id=1-42&viewport=-35%2C219%2C0.21&t=oUKRntvnhuga3tTK-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1",
+    image: "/presstalks/lablup-talk.png",
   },
   {
     id: 5,
-    title: "Notion offboarding",
-    source: "DGIST",
+    title: "Retrospective: Mastering Multi-Tasking and Schedule Ownership",
+    source: "Notion",
     description: (
       <>
-        Notion class
+        Delivered a retrospective talk at the Notion Campus Leader Cohort 3 offboarding ceremony, sharing a personal system for managing a high-density schedule across school, research, and internships.
+        Demonstrated how to leverage Notion and AI tools to take ownership of demanding timelines and maintain consistent performance across multiple concurrent roles.
       </>
     ),
     type: "talk",
     startYear: 2025,
     startMonth: 7,
     selected: false,
-    link: "https://luma.com/r74xd074",
-    image: "/placeholder.svg",
+    link: "https://dev-mintcat.tistory.com/15",
+    image: "/presstalks/notion-offboarding.jpeg",
   },
 ]
 
