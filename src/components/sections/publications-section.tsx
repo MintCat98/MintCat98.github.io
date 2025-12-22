@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LinkableCard } from "@/components/ui/linkable-card"
+import { LinkButtons, type LinkButtonItem } from "@/components/ui/link-buttons"
 import { cn } from "@/lib/utils"
 
 interface PublicationsSectionProps {
@@ -19,6 +20,7 @@ interface PublicationItem {
   month: number // 1-12, 내부 정렬용
   selected: boolean
   link?: string
+  links?: LinkButtonItem[]
   image: string
 }
 
@@ -113,6 +115,7 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
               {pub.title}
             </h3>
             <p className="text-muted-foreground text-sm">{pub.authors}</p>
+            <LinkButtons links={pub.links} className="mt-3" />
           </div>
           {pub.link && (
             <ChevronRight className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 mt-1" />

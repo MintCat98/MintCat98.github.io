@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LinkableCard } from "@/components/ui/linkable-card"
+import { LinkButtons, type LinkButtonItem } from "@/components/ui/link-buttons"
 import { TechBadge } from "@/components/ui/tech-badge"
 import { cn } from "@/lib/utils"
 
@@ -22,6 +23,7 @@ interface ProjectItem {
   endYear?: number // undefined if ongoing
   endMonth?: number // 1-12, undefined if ongoing
   link?: string
+  links?: LinkButtonItem[]
   image: string
 }
 
@@ -130,6 +132,7 @@ export function ProjectsSection({ highlightId }: ProjectsSectionProps) {
           {project.title}
         </h3>
         <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{project.description}</p>
+        <LinkButtons links={project.links} className="mb-3" />
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <TechBadge key={tag} name={tag} />

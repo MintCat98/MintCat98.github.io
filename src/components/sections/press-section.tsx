@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Star, ChevronRight, Mic, Newspaper, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LinkableCard } from "@/components/ui/linkable-card"
+import { LinkButtons, type LinkButtonItem } from "@/components/ui/link-buttons"
 import { cn } from "@/lib/utils"
 
 interface PressSectionProps {
@@ -23,6 +24,7 @@ interface PressItem {
   ongoing?: boolean // true if currently ongoing (shows "Present")
   selected: boolean
   link?: string
+  links?: LinkButtonItem[]
   image: string
 }
 
@@ -199,6 +201,7 @@ export function PressSection({ highlightId }: PressSectionProps) {
             </h3>
             <p className="text-primary text-sm mb-1">{item.source}</p>
             <p className="text-muted-foreground text-sm">{item.description}</p>
+            <LinkButtons links={item.links} className="mt-3" />
           </div>
           {item.link && (
             <ChevronRight className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 mt-1" />
