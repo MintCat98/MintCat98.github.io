@@ -53,6 +53,8 @@ export function HighlightsSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const lastScrollTime = useRef(0)
   const lockedScrollTop = useRef(0)
+  const bufferAccumulator = useRef(0) // 버퍼 스크롤 누적값
+  const bufferThreshold = 1500 // 섹션 전환을 위한 스크롤 누적 임계값
   const totalItems = highlights.length
 
   const isAtStart = activeIndex === 0
@@ -139,14 +141,47 @@ export function HighlightsSection() {
       const isScrollingDown = e.deltaY > 0
       const isScrollingUp = e.deltaY < 0
 
-      // 첫 번째 카드에서 위로 스크롤: 이전 섹션으로
+      // 첫 번째 카드에서 위로 스크롤: 버퍼 누적 후 이전 섹션으로
       if (isAtStart && isScrollingUp) {
-        return // 기본 스크롤 허용
+        bufferAccumulator.current += Math.abs(e.deltaY)
+        
+        if (bufferAccumulator.current >= bufferThreshold) {
+          // 임계값 도달 시 섹션 전환 허용
+          bufferAccumulator.current = 0
+          return // 기본 스크롤 허용
+        }
+        
+        // 아직 임계값 미달 - 스크롤 막고 위치 고정
+        e.preventDefault()
+        e.stopPropagation()
+        requestAnimationFrame(() => {
+          snapContainer.scrollTop = lockedScrollTop.current
+        })
+        return
       }
 
-      // 마지막 카드에서 아래로 스크롤: 다음 섹션으로
+      // 마지막 카드에서 아래로 스크롤: 버퍼 누적 후 다음 섹션으로
       if (isAtEnd && isScrollingDown) {
-        return // 기본 스크롤 허용
+        bufferAccumulator.current += Math.abs(e.deltaY)
+        
+        if (bufferAccumulator.current >= bufferThreshold) {
+          // 임계값 도달 시 섹션 전환 허용
+          bufferAccumulator.current = 0
+          return // 기본 스크롤 허용
+        }
+        
+        // 아직 임계값 미달 - 스크롤 막고 위치 고정
+        e.preventDefault()
+        e.stopPropagation()
+        requestAnimationFrame(() => {
+          snapContainer.scrollTop = lockedScrollTop.current
+        })
+        return
+      }
+
+      // 경계에서 반대 방향으로 스크롤하면 버퍼 리셋
+      if ((isAtStart && isScrollingDown) || (isAtEnd && isScrollingUp)) {
+        bufferAccumulator.current = 0
       }
 
       // 그 외: 스크롤 막고 카드 전환
