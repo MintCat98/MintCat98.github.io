@@ -40,9 +40,9 @@ export function HighlightsSection() {
         <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Highlights</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {highlights.map((item) => (
-            <a key={item.id} href={item.link}>
+            <a key={item.id} href={item.link} className="h-full">
               <Card className="group cursor-pointer bg-card border-border hover:border-primary/50 card-hover h-full">
-                <CardContent className="p-6">
+                <CardContent className="p-6 h-full flex flex-col">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-2.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
                       <item.icon className="w-5 h-5 text-primary" />
@@ -52,8 +52,8 @@ export function HighlightsSection() {
                   <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{item.content}</p>
-                  <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300">
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">{item.content}</p>
+                  <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300 mt-auto">
                     {item.linkText}
                     <ArrowRight className="w-4 h-4" />
                   </div>
