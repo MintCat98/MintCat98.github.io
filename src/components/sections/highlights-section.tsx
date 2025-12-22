@@ -49,10 +49,12 @@ const highlights = [
 
 export function HighlightsSection() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const sectionRef = useRef<HTMLElement>(null)
+  const [isLocked, setIsLocked] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
   const lastScrollTime = useRef(0)
-
+  const lockedScrollTop = useRef(0)
   const totalItems = highlights.length
+
   const isAtStart = activeIndex === 0
   const isAtEnd = activeIndex === totalItems - 1
 
@@ -64,70 +66,146 @@ export function HighlightsSection() {
     setActiveIndex((prev) => Math.max(prev - 1, 0))
   }, [])
 
-  // 스크롤 기반 카드 전환 - 시작/끝에서만 페이지 스크롤 허용
+  // IntersectionObserver로 섹션이 화면 중앙에 있는지 감지
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
 
-    const handleWheel = (e: WheelEvent) => {
-      const rect = section.getBoundingClientRect()
-      // 섹션이 화면 중앙에 있을 때만 캐러셀 스크롤 처리
-      const isInView = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
+    const highlightsSection = section.closest("section")
+    if (!highlightsSection) return
 
-      if (isInView) {
-        const now = Date.now()
-        const isScrollingDown = e.deltaY > 0
-        const isScrollingUp = e.deltaY < 0
+    const snapContainer = document.getElementById("snap-container")
+    if (!snapContainer) return
 
-        // 첫 번째 카드에서 위로 스크롤 또는 마지막 카드에서 아래로 스크롤 시 페이지 스크롤 허용
-        if ((isAtStart && isScrollingUp) || (isAtEnd && isScrollingDown)) {
-          return // 기본 스크롤 동작 허용
-        }
-
-        // 그 외에는 카드 전환
-        if (Math.abs(e.deltaY) > 30) {
-          e.preventDefault()
-          
-          if (now - lastScrollTime.current < 400) return // 디바운스
-          lastScrollTime.current = now
-
-          if (isScrollingDown) {
-            goToNext()
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.9) {
+            // 섹션이 보이면 스크롤 위치 저장하고 잠금
+            lockedScrollTop.current = snapContainer.scrollTop
+            setIsLocked(true)
           } else {
-            goToPrev()
+            setIsLocked(false)
           }
+        })
+      },
+      { threshold: [0.9], root: snapContainer }
+    )
+
+    observer.observe(highlightsSection)
+    return () => observer.disconnect()
+  }, [])
+
+  // 스크롤 잠금: 캐러셀 동작 중에는 스크롤 위치 고정
+  useEffect(() => {
+    const snapContainer = document.getElementById("snap-container")
+    if (!snapContainer) return
+
+    if (!isLocked) {
+      snapContainer.style.overflow = ""
+      return
+    }
+
+    // 스크롤이 발생하면 원래 위치로 되돌림
+    const lockScroll = () => {
+      if (isLocked && !isAtStart && !isAtEnd) {
+        // 중간 카드일 때만 스크롤 고정
+      }
+    }
+
+    const handleScroll = () => {
+      // 첫 번째/마지막 카드가 아니면 스크롤 위치 고정
+      if (isLocked) {
+        if ((isAtStart) || (isAtEnd)) {
+          // 경계에서는 스크롤 허용
+        } else {
+          snapContainer.scrollTop = lockedScrollTop.current
         }
       }
     }
 
-    window.addEventListener("wheel", handleWheel, { passive: false })
-    return () => window.removeEventListener("wheel", handleWheel)
-  }, [goToNext, goToPrev, isAtStart, isAtEnd])
+    snapContainer.addEventListener("scroll", handleScroll)
+    return () => snapContainer.removeEventListener("scroll", handleScroll)
+  }, [isLocked, isAtStart, isAtEnd])
+
+  // wheel 이벤트로 카드 전환
+  useEffect(() => {
+    const snapContainer = document.getElementById("snap-container")
+    if (!snapContainer) return
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!isLocked) return
+
+      const isScrollingDown = e.deltaY > 0
+      const isScrollingUp = e.deltaY < 0
+
+      // 첫 번째 카드에서 위로 스크롤: 이전 섹션으로
+      if (isAtStart && isScrollingUp) {
+        return // 기본 스크롤 허용
+      }
+
+      // 마지막 카드에서 아래로 스크롤: 다음 섹션으로
+      if (isAtEnd && isScrollingDown) {
+        return // 기본 스크롤 허용
+      }
+
+      // 그 외: 스크롤 막고 카드 전환
+      e.preventDefault()
+      e.stopPropagation()
+
+      // 민감도 조절: deltaY가 충분히 커야 전환
+      if (Math.abs(e.deltaY) < 30) return
+
+      const now = Date.now()
+      if (now - lastScrollTime.current < 600) return // 디바운스 시간 증가
+      lastScrollTime.current = now
+
+      if (isScrollingDown) {
+        goToNext()
+      } else if (isScrollingUp) {
+        goToPrev()
+      }
+
+      // 스크롤 위치 강제 고정
+      requestAnimationFrame(() => {
+        snapContainer.scrollTop = lockedScrollTop.current
+      })
+    }
+
+    snapContainer.addEventListener("wheel", handleWheel, { passive: false })
+    return () => snapContainer.removeEventListener("wheel", handleWheel)
+  }, [isLocked, isAtStart, isAtEnd, goToNext, goToPrev])
 
   // 카드 위치와 스타일 계산 (비순환형)
   const getCardStyle = (index: number) => {
     const diff = index - activeIndex
 
     const isActive = diff === 0
-    const isAdjacent = Math.abs(diff) === 1
-    
-    // 첫 번째 카드에서는 왼쪽 카드 숨김, 마지막 카드에서는 오른쪽 카드 숨김
-    const shouldHide = Math.abs(diff) > 1
+    const isPrev = diff === -1
+    const isNext = diff === 1
+    const isHidden = Math.abs(diff) > 1
 
-    // 기본 스타일
-    let translateX = diff * 70 // 좌우 이동 (%)
-    let translateZ = isActive ? 0 : isAdjacent ? -150 : -300 // 깊이
-    let scale = isActive ? 1 : isAdjacent ? 0.8 : 0.6
-    let opacity = isActive ? 1 : isAdjacent ? 0.5 : 0
-    let zIndex = isActive ? 30 : isAdjacent ? 20 : 10
-    let blur = isActive ? 0 : isAdjacent ? 2 : 4
+    let translateX = diff * 70
+    let scale = isActive ? 1 : 0.8
+    let opacity = isActive ? 1 : (isPrev || isNext) ? 0.4 : 0
+    let zIndex = isActive ? 30 : 20
+    let blur = isActive ? 0 : 3
 
-    if (shouldHide) {
+    // 첫 번째 카드일 때 왼쪽(이전) 카드 숨김
+    if (isAtStart && isPrev) {
+      opacity = 0
+    }
+    // 마지막 카드일 때 오른쪽(다음) 카드 숨김
+    if (isAtEnd && isNext) {
+      opacity = 0
+    }
+
+    if (isHidden) {
       opacity = 0
     }
 
     return {
-      transform: `translateX(${translateX}%) translateZ(${translateZ}px) scale(${scale})`,
+      transform: `translateX(${translateX}%) scale(${scale})`,
       opacity,
       zIndex,
       filter: `blur(${blur}px)`,
@@ -136,81 +214,78 @@ export function HighlightsSection() {
   }
 
   return (
-    <section 
+    <div 
       ref={sectionRef}
-      id="highlights" 
-      className="flex flex-col items-center justify-center min-h-screen py-12 overflow-hidden"
+      className="flex flex-col items-center justify-center w-full"
+      style={{ overflowX: "clip" }}
     >
-      <div className="w-full max-w-6xl mx-auto px-6">
-        <h2 className="text-2xl font-bold text-foreground mb-4 text-center">Highlights</h2>
-        <br />
+      <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Highlights</h2>
 
-        {/* 3D 캐러셀 컨테이너 */}
-        <div className="relative h-[480px] perspective-[1200px]" style={{ perspective: "1200px" }}>
-          <div className="absolute inset-0 flex items-center justify-center">
-            {highlights.map((item, index) => (
-              <div
-                key={item.id}
-                className="absolute w-full max-w-md transition-all duration-500 ease-out"
-                style={getCardStyle(index)}
-              >
-                <a href={item.link} className="block">
-                  <Card className="group cursor-pointer bg-card border-border hover:border-primary/50 overflow-hidden p-0 shadow-2xl">
-                    {/* 16:9 이미지 영역 */}
-                    <div className="relative aspect-video overflow-hidden bg-muted">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      {/* 하단 그림자 오버레이 */}
-                      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/7 to-transparent pointer-events-none" />
-                      {/* 오버레이: 아이콘과 subtitle */}
-                      <div className="absolute bottom-3 left-5 right-5 flex items-end justify-between">
-                        <div className="p-2 rounded-lg bg-background/80 backdrop-blur-sm shadow-sm group-hover:bg-primary/20 transition-colors duration-300">
-                          <item.icon className="w-5 h-5 text-primary" />
-                        </div>
-                        {item.subtitle && (
-                          <span className="px-2.5 py-1 text-xs font-medium text-foreground bg-background/80 backdrop-blur-sm rounded-full shadow-sm">
-                            {item.subtitle}
-                          </span>
-                        )}
+      {/* 3D 캐러셀 컨테이너 - 그림자를 위한 패딩 추가 */}
+      <div className="relative h-[520px] w-full py-5" style={{ perspective: "1200px" }}>
+        <div className="absolute inset-0 flex items-center justify-center">
+          {highlights.map((item, index) => (
+            <div
+              key={item.id}
+              className="absolute w-full max-w-md transition-all duration-500 ease-out"
+              style={getCardStyle(index)}
+            >
+              <a href={item.link} className="block">
+                <Card className="group cursor-pointer bg-card border-border hover:border-primary/50 overflow-hidden p-0 shadow-2xl">
+                  {/* 16:9 이미지 영역 */}
+                  <div className="relative aspect-video overflow-hidden bg-muted">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {/* 하단 그림자 오버레이 */}
+                    <div className="absolute inset-x-0 bottom-0 h-15 bg-gradient-to-t from-black/7 to-transparent pointer-events-none" />
+                    {/* 오버레이: 아이콘과 subtitle */}
+                    <div className="absolute bottom-3 left-5 right-5 flex items-end justify-between">
+                      <div className="p-2 rounded-lg bg-background/80 backdrop-blur-sm shadow-sm group-hover:bg-primary/20 transition-colors duration-300">
+                        <item.icon className="w-5 h-5 text-primary" />
                       </div>
+                      {item.subtitle && (
+                        <span className="px-2.5 py-1 text-xs font-medium text-foreground bg-background/80 backdrop-blur-sm rounded-full shadow-sm">
+                          {item.subtitle}
+                        </span>
+                      )}
                     </div>
-                    <CardContent className="p-7 pb-10 pt-0 flex flex-col">
-                      <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                        {item.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">{item.content}</p>
-                      <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300">
-                        {item.linkText}
-                        <ArrowRight className="w-4 h-4" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-        <br />
-
-        {/* 인디케이터 */}
-        <div className="flex justify-center gap-2 mt-8">
-          {highlights.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === activeIndex 
-                  ? "bg-primary w-6" 
-                  : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
+                  </div>
+                  <CardContent className="p-7 pb-10 pt-0 flex flex-col">
+                    <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">{item.content}</p>
+                    <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300">
+                      {item.linkText}
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </a>
+            </div>
           ))}
         </div>
       </div>
-    </section>
+
+      {/* 인디케이터 */}
+      <div className="flex justify-center gap-2 mt-8">
+        {highlights.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setActiveIndex(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === activeIndex 
+                ? "bg-primary w-6" 
+                : index < activeIndex
+                ? "bg-primary/50 w-2"
+                : "bg-muted-foreground/30 w-2"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   )
 }
