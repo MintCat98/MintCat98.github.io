@@ -38,6 +38,13 @@ const typeColors: Record<NewsType, string> = {
 // News data - can be easily modified or moved to external data file
 const newsData: NewsItem[] = [
   {
+    year: 2026,
+    month: 2,
+    date: "Feb 2026",
+    content: "🎓 Graduated from DGIST with a Bachelor's degree!",
+    type: "notice",
+  },
+  {
     year: 2025,
     month: 12,
     date: "Dec 2025",
