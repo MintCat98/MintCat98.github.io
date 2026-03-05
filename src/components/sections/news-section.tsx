@@ -12,7 +12,6 @@ export type NewsType = "publication" | "talk" | "project" | "award" | "collabora
 export interface NewsItem {
   year: number
   month: number // 1-12
-  date: string // e.g., "Dec 2024" - display string
   content: string
   type: NewsType
   link?: string // Optional link to related content
@@ -39,19 +38,31 @@ const typeColors: Record<NewsType, string> = {
 const newsData: NewsItem[] = [
   {
     year: 2026,
+    month: 3,
+    content: "🔬 Started my Master's program at KAIST ACSS Lab!",
+    type: "notice",
+  },
+  {
+    year: 2026,
     month: 2,
-    date: "Feb 2026",
     content: "🎓 Graduated from DGIST with a Bachelor's degree!",
     type: "notice",
   },
   {
     year: 2025,
     month: 12,
-    date: "Dec 2025",
     content: "🥳 Launched my website to share my journey!",
     type: "notice",
   },
 ]
+
+
+
+// Helper function to format date from year and month
+const formatDate = (year: number, month: number): string => {
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  return `${monthNames[month - 1]} ${year}`
+}
 
 // Sort news by date (newest first) and limit to max 10 items
 const sortedNewsData = [...newsData]
@@ -71,7 +82,7 @@ function NewsCard({ item }: { item: NewsItem }) {
     >
       <div className="flex items-center gap-2 text-muted-foreground text-sm min-w-[100px]">
         <Calendar className="w-4 h-4" />
-        {item.date}
+        {formatDate(item.year, item.month)}
       </div>
       <div className="flex-1">
         <p className="text-foreground">{item.content}</p>
