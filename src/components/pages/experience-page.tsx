@@ -48,7 +48,7 @@ const timelineItems: TimelineItem[] = [
         <a href="https://www.kaist.ac.kr/en/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ Korea Advanced Institute of Science and Technology (KAIST), South Korea</a>
       </>
     ),
-    startDate: "Feb 2026",
+    startDate: "Mar 2026",
     endDate: "Present",
     description: (
       <>
