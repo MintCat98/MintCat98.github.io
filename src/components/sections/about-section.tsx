@@ -14,12 +14,12 @@ const socialLinks = [
 ]
 
 const interests = [
-  "Physical AI & Robotics",
-  "Multimodal AI",
-  "Vision-Language Models",
+  "Physical AI",
+  "VLAs",
   "Reinforcement Learning",
+  "Simulation",
   "Robustness in AI",
-  "AI Safety",
+  "Trustworthy AI",
   "Explainable AI",
 ]
 
@@ -77,8 +77,8 @@ export function AboutSection() {
           <p className="text-foreground leading-relaxed text-lg pl-10">
             I&apos;m an AI researcher passionate about building intelligent systems that understand and interact with
             humans naturally. My work lies at the intersection of{" "}
-            <span className="text-primary font-medium">robotics AI</span>,{" "}
-            <span className="text-primary font-medium">vision language models</span>, and{" "}
+            <span className="text-primary font-medium">Physical AI</span>,{" "}
+            <span className="text-primary font-medium">VLAs</span>, and{" "}
             <span className="text-primary font-medium">trustworthy AI</span>.
           </p>
         </div>
