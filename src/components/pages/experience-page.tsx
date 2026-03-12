@@ -33,7 +33,7 @@ const timelineItems: TimelineItem[] = [
     endDate: "Feb 2026",
     description: (
       <>
-        • GPA: <i>3.99/4.30 (96.9%)</i> | • Advisor: <i><a href="https://scholar.google.com/citations?user=jsHfhqgAAAAJ" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. Yeseong Kim</a></i><br />
+        • GPA: <i>3.99/4.30 (96.9%/<b>Magna Cum Laude</b>)</i> | • Advisor: <i><a href="https://scholar.google.com/citations?user=jsHfhqgAAAAJ" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. Yeseong Kim</a></i><br />
         • Thesis: <i>"CoDeMP: Color Description Multimodal Pipeline"</i>
       </>
     ),

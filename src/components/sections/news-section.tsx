@@ -45,7 +45,7 @@ const newsData: NewsItem[] = [
   {
     year: 2026,
     month: 2,
-    content: "🎓 Graduated from DGIST with a Bachelor's degree!",
+    content: "🎓 Graduated magna cum laude from DGIST with a Bachelor's degree!",
     type: "notice",
   },
   {
