@@ -52,7 +52,7 @@ const timelineItems: TimelineItem[] = [
     endDate: "Present",
     description: (
       <>
-        • Lab: <i><a href="http://acss.kaist.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Autonomous Control and Stochastic Systems Research (ACSS) Lab</a></i><br />
+        • Lab: <i><a href="http://acss.kaist.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Autonomous Control and Stochastic Systems (ACSS) Research Lab</a></i><br />
         • GPA: <i>-/4.30 (-%)</i> | • Advisor: <i><a href="https://soojean.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">Prof. SooJean Han</a></i><br />
         • Thesis: <i>"-"</i>
       </>
