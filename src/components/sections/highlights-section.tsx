@@ -30,7 +30,7 @@ const highlights = [
     icon: MicIcon,
     title: "Featured Press & Talks",
     subtitle: "Notion",
-    content: "Code Refactoring: Folder APIs in storage-proxy in Backend.AI",
+    content: "Delivered a retrospective talk at the Notion Campus Leader Cohort 3 offboarding ceremony!",
     link: "/work/press",
     linkText: "See More Press & Talks",
     image: "/presstalks/notion-offboarding.jpeg",

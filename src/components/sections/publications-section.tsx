@@ -47,7 +47,7 @@ const publications: PublicationItem[] = [
       <sup>*</sup>Sihyeong Lee, <sup>*</sup><b>Mincheol Kang</b>, and <sup>†</sup>Daehee Park
       </>
     ),
-    venue: "CVPR26 Submitted",
+    venue: "CVPR26 Findings Submitted",
     year: 2025,
     month: 11,
     selected: false,
@@ -61,7 +61,7 @@ const publications: PublicationItem[] = [
       <sup>*</sup><b>Mincheol Kang</b>, <sup>*</sup>Hyeonjin Lim, Bomin Kang, and <sup>†</sup>Daehee Park
       </>
     ),
-    venue: "CVPR26 Submitted",
+    venue: "ECCV26 Submitted",
     year: 2025,
     month: 11,
     selected: false,
