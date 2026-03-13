@@ -70,20 +70,19 @@ export function AboutSection() {
         <p className="text-primary font-medium text-lg mt-2">AI Researcher</p>
         <p className="text-muted-foreground text-sm mt-1">M.S. Student @ ACSS Research Lab, KAIST EE, South Korea</p>
 
-        <div className="relative mt-8 px-4">
-          <div className="absolute left-19 -top-3">
+        <div className="relative mt-6 px-4">
+          <div className="absolute left-4 top-0 pointer-events-none" aria-hidden="true">
             <QuotationMark />
           </div>
           <p className="text-foreground leading-relaxed text-lg pl-10">
-            I&apos;m an AI researcher passionate about building intelligent systems that understand and interact with
-            humans naturally. My work lies at the intersection of{" "}
-            <span className="text-primary font-medium">Physical AI</span>,{" "}
-            <span className="text-primary font-medium">VLAs</span>, and{" "}
-            <span className="text-primary font-medium">trustworthy AI</span>.
+            I&apos;m an AI researcher and M.S. student at KAIST ACSS Lab, advised by <span className="whitespace-nowrap">Prof. Soojean Han</span>. My work centers on{" "}
+            <span className="text-primary font-medium">Physical AI</span> and{" "}
+            <span className="text-primary font-medium">VLAs</span>, specifically building{" "}
+            <span className="text-primary font-medium">Trustworthy Systems</span> that allow intelligent agents to interact naturally and safely with humans in complex environments.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 mt-8">
+        <div className="flex items-center gap-3 mt-6">
           {socialLinks.map((link) => {
             const linkElement = (
               <a
