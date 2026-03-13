@@ -13,7 +13,7 @@ const highlights = [
     content: "New publications are in progress! Stay tuned for my latest research updates! 👀",
     link: "/work/publications",
     linkText: "See More Publications",
-    image: "/publications/cvpr26-gom.png",
+    image: "/publications/eccv26-gom.png",
   },
   {
     id: "projects",
