@@ -47,7 +47,7 @@ const publications: PublicationItem[] = [
       <sup>*</sup>Sihyeong Lee, <sup>*</sup><b>Mincheol Kang</b>, and <sup>†</sup>Daehee Park
       </>
     ),
-    venue: "CVPR26 Findings Submitted",
+    venue: "ECCV26 Submitted",
     year: 2025,
     month: 11,
     selected: false,
@@ -61,16 +61,17 @@ const publications: PublicationItem[] = [
       <sup>*</sup><b>Mincheol Kang</b>, <sup>*</sup>Hyeonjin Lim, Bomin Kang, and <sup>†</sup>Daehee Park
       </>
     ),
-    venue: "ECCV26 Submitted",
+    venue: "CVPR26 Findings",
     year: 2025,
     month: 11,
-    selected: false,
+    selected: true,
     image: "/publications/cvpr26-bittp.png",
   },
 ]
 
-// year와 month 기준 최신순 정렬
+// selected 우선 정렬 후 year/month 기준 최신순 정렬
 const sortedPublications = [...publications].sort((a, b) => {
+  if (a.selected !== b.selected) return a.selected ? -1 : 1
   if (b.year !== a.year) return b.year - a.year
   return b.month - a.month
 })
