@@ -15,12 +15,10 @@ const socialLinks = [
 
 const interests = [
   "Physical AI",
-  "VLAs",
   "Reinforcement Learning",
-  "Simulation",
-  "Robustness in AI",
-  "Trustworthy AI",
-  "Explainable AI",
+  "World Action Models",
+  "VLA Models",
+  "Robust and Safe Control",
 ]
 
 const skills = [
