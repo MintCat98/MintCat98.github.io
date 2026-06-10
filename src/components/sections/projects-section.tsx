@@ -61,6 +61,21 @@ const projectsData: ProjectItem[] = [
     link: "https://github.com/lablup/backend.ai/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Aclosed+author%3AMintCat98",
     image: "/projects/backendai-folder-api-refactor.png",
   },
+  {
+    id: 3,
+    title: "ChatTree: Navigate your AI conversations like a map",
+    description: (
+      <>
+      PM'd and built a Manifest V3 Chrome extension that visualizes Claude.ai conversations as an interactive tree-map, turning long and branching chat sessions into a navigable overview. Implemented real-time branch detection via MutationObserver and DOM snapshot diffing, with a Shadow DOM-isolated React panel for click-to-jump navigation.
+      </>
+    ),
+    tags: ["TypeScript", "React", "Next.js", "Tailwind CSS"],
+    selected: true,
+    startYear: 2026,
+    startMonth: 5,
+    link: "https://github.com/MintCat98/ChatTree",
+    image: "/projects/chattree.gif",
+  },
 ]
 
 // Helper function to format date range

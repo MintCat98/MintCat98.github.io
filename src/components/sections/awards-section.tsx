@@ -113,6 +113,18 @@ const awardsData: AwardItem[] = [
     icon: Medal,
     image: "/awards/ipesk-next-generation-engineering-talent-2025.png",
   },
+  {
+    id: 9,
+    title: "KAIST Opensource Impact (KOI) Contest 2026 | 2nd Place",
+    organization: "KAIST SW Education Center",
+    description: "",
+    year: 2026,
+    month: 6,
+    selected: true,
+    link: "/work/projects?highlight=3",
+    icon: Trophy,
+    image: "/awards/kaist-opensource-impact-2026.jpeg",
+  },
 ]
 
 // Sort awards: selected first (sorted by date desc), then non-selected (sorted by date desc)
