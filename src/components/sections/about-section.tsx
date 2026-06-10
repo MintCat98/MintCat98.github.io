@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Mail, Github, Linkedin, ChevronDown, ChevronUp, NotebookPen, FileUser } from "lucide-react"
+import { Mail, Github, Linkedin, ChevronDown, ChevronUp, NotebookPen, FileUser, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 
@@ -9,6 +9,7 @@ const socialLinks = [
   { icon: Mail, href: "mailto:mintcat@kaist.ac.kr", label: "Email" },
   { icon: Github, href: "https://github.com/MintCat98", label: "GitHub" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/mintcatkmc-361a5a294/", label: "LinkedIn" },
+  { icon: GraduationCap, href: "https://scholar.google.com/citations?user=wYn8GsIAAAAJ&hl", label: "GoogleScholar" },
   { icon: FileUser, href: "/cv.pdf", label: "CV" },
   { icon: NotebookPen, href: "https://dev-mintcat.tistory.com/", label: "Blog" },
 ]
