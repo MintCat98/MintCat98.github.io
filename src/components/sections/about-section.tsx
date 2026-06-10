@@ -18,8 +18,9 @@ const interests = [
   "Physical AI",
   "Reinforcement Learning",
   "World Action Models",
-  "VLA Models",
   "Robust and Safe Control",
+  "Model Quantization",
+  "VLA Models",
 ]
 
 const skills = [
