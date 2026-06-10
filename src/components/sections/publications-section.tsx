@@ -44,7 +44,7 @@ const publications: PublicationItem[] = [
     title: "GOM: Guided Occupancy World Model for Robust Planning in Safety-Critical Scenarios",
     authors: (
       <>
-      <sup>*</sup>Sihyeong Lee, <sup>*</sup><b>Mincheol Kang</b>, and <sup>†</sup>Daehee Park
+      Sihyeong Lee<sup>*</sup>, <b>Mincheol Kang<sup>*</sup></b>, and Daehee Park<sup>†</sup>
       </>
     ),
     venue: "ECCV26 Submitted",
@@ -58,7 +58,7 @@ const publications: PublicationItem[] = [
     title: "BitTP: The Lightweight Trajectory Prediction Model with BitLLM for Edge-Devices",
     authors: (
       <>
-      <sup>*</sup><b>Mincheol Kang</b>, <sup>*</sup>Hyeonjin Lim, Bomin Kang, and <sup>†</sup>Daehee Park
+      <b>Mincheol Kang<sup>*‡</sup></b>, Hyeonjin Lim<sup>*</sup>, Bomin Kang<sup>*</sup>, and Daehee Park<sup>†</sup>
       </>
     ),
     venue: "CVPR26 Findings",
