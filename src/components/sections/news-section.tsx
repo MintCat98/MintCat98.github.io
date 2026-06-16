@@ -39,6 +39,13 @@ const newsData: NewsItem[] = [
   {
     year: 2026,
     month: 6,
+    content: "🏅 Selected as a recipient of the Master's Excellence Scholarship (석사우수장학금(이공계))!",
+    type: "award",
+    // link: "",
+  },
+  {
+    year: 2026,
+    month: 6,
     content: "🎤 Presented BitTP as a poster at CVPR 2026 in Denver!",
     type: "talk",
     link: "https://www.linkedin.com/posts/%EB%AF%BC%EC%B2%A0-%EA%B0%95-361a5a294_cvpr2026-computervision-llm-ugcPost-7469266782394994689-BpmL/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEdY0nkBKtfl8cQ-ixHiRJeIDRrkLdnwY5w",
