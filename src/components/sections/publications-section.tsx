@@ -149,17 +149,10 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
 
   return (
     <section id="publications">
-      <div className="flex items-start justify-between mb-6 gap-4">
-        <div className="flex flex-col gap-1">
-          <p className="text-muted-foreground text-sm">
-            {sortedPublications.length} publications • {sortedPublications.filter((p) => p.selected).length} selected
-          </p>
-          <p className="text-muted-foreground text-xs italic">
-            <sup>*</sup> indicates equally contributed first authors&ensp;
-            <sup>†</sup> indicates corresponding author(s)&ensp;
-            <sup>‡</sup> indicates project leader(s)
-          </p>
-        </div>
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <p className="text-muted-foreground text-sm">
+          {sortedPublications.length} publications • {sortedPublications.filter((p) => p.selected).length} selected
+        </p>
         <Button
           variant="outline"
           size="sm"

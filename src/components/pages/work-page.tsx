@@ -49,7 +49,7 @@ export function WorkPageContent({ activeTab = "publications" }: WorkPageContentP
           <h1 className="text-3xl font-bold text-foreground mb-2">Work</h1>
           <p className="text-muted-foreground mb-8">A collection of my research, projects, and achievements</p>
 
-          <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
+          <div className={`flex items-center gap-2 overflow-x-auto pb-2 ${activeTab === "publications" ? "mb-3" : "mb-8"}`}>
             {tabs.map((tab) => (
               <a
                 key={tab.id}
@@ -64,6 +64,13 @@ export function WorkPageContent({ activeTab = "publications" }: WorkPageContentP
               </a>
             ))}
           </div>
+          {activeTab === "publications" && (
+            <p className="text-muted-foreground text-xs italic mb-8">
+              <sup>*</sup> indicates equally contributed first authors&ensp;
+              <sup>†</sup> indicates corresponding author(s)&ensp;
+              <sup>‡</sup> indicates project leader(s)
+            </p>
+          )}
 
           <div className="min-h-[500px]">
             {activeTab === "publications" && <PublicationsSection highlightId={highlightId} />}
