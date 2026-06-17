@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Star, ChevronRight } from "lucide-react"
+import { Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LinkableCard } from "@/components/ui/linkable-card"
 import { LinkButtons, type LinkButtonItem } from "@/components/ui/link-buttons"
@@ -19,11 +19,23 @@ interface PublicationItem {
   year: number
   month: number // 1-12, 내부 정렬용
   selected: boolean
-  link?: string
   links?: LinkButtonItem[]
   image: string
 }
 
+// 카드 하단 버튼은 links 배열로 추가한다. (아이콘/기본 라벨은 link-buttons.tsx 에 미리 정의됨)
+// 사용 가능한 type: "project" | "venue" | "paper" | "slides" | "video" | "code" | "custom"
+// type 과 url 만 넘기면 되고, "venue"(학회/저널 게재 페이지)처럼 이름이 매번 바뀌는 건 label 로 지정한다.
+//
+// 예시:
+//   links: [
+//     { type: "project", url: "https://..." },
+//     { type: "venue", url: "https://...", label: "AAAI" }, // 학회/저널명은 label 로
+//     { type: "paper", url: "https://..." },
+//     { type: "slides", url: "https://..." },
+//     { type: "video", url: "https://..." },
+//     { type: "code", url: "https://github.com/..." },
+//   ],
 const publications: PublicationItem[] = [
   {
     id: 1,
@@ -38,6 +50,9 @@ const publications: PublicationItem[] = [
     month: 9,
     selected: false,
     image: "/publications/chi26-easy_come_easy_go.png",
+    links: [
+      { type: "paper", url: "https://arxiv.org/abs/2410.01396" },
+    ],
   },
   {
     id: 2,
@@ -66,6 +81,12 @@ const publications: PublicationItem[] = [
     month: 11,
     selected: true,
     image: "/publications/cvpr26findings-bittp.png",
+    links: [
+      { type: "project", url: "https://mintcat98.github.io/BitTP/" },
+      { type: "venue", url: "https://openaccess.thecvf.com/content/CVPR2026F/html/Kang_BitTP_The_Lightweight_Trajectory_Prediction_Model_with_BitLLM_for_Edge-Devices_CVPRF_2026_paper.html", label: "CVPR" }, // 학회/저널명은 label 로 지정 (게재 페이지)
+      { type: "paper", url: "https://arxiv.org/abs/2605.29705" },
+      { type: "code", url: "https://github.com/MintCat98/BitTP" },
+    ],
   },
 ]
 
@@ -118,9 +139,6 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
             <p className="text-muted-foreground text-sm">{pub.authors}</p>
             <LinkButtons links={pub.links} className="mt-3" />
           </div>
-          {pub.link && (
-            <ChevronRight className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 mt-1" />
-          )}
         </div>
       </div>
     </div>
@@ -160,7 +178,6 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
           <LinkableCard
             key={pub.id}
             ref={pub.id === highlightId ? highlightRef : null}
-            link={pub.link}
             className={cn(
               pub.selected ? "border-primary/30 bg-primary/5" : "border-border",
               pub.id === highlightId && "highlight-card",
