@@ -109,19 +109,22 @@ export function PublicationsSection({ highlightId }: PublicationsSectionProps) {
   }, [highlightId])
 
   const CardContent = ({ pub }: { pub: PublicationItem }) => (
-    <div className="flex items-start">
-      <div className="hidden sm:block w-48 h-48 shrink-0 overflow-hidden rounded-l-xl">
+    <div className="flex items-stretch">
+      {/* 좌측 이미지 프레임: 너비를 카드의 고정 비율(%)로 잡아 뷰포트에 따라 프레임·이미지가 함께 커짐.
+          items-stretch 로 카드 높이를 꽉 채우므로(아래 여백 없음) object-cover 로 중앙부터 채우고
+          비율이 안 맞으면 가로/세로가 잘림. 모바일에서는 숨김. */}
+      <div className="relative hidden sm:block w-[34%] lg:w-[32%] shrink-0 overflow-hidden rounded-l-xl">
         <img
           src={pub.image || "/placeholder.svg"}
           alt={pub.title}
-          width={192}
-          height={192}
+          width={400}
+          height={240}
           loading="lazy"
           decoding="async"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
         />
       </div>
-      <div className="flex-1 p-5">
+      <div className="flex-1 min-w-0 p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
