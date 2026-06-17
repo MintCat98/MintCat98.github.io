@@ -39,6 +39,13 @@ const newsData: NewsItem[] = [
   {
     year: 2026,
     month: 6,
+    content: "🏅 Selected as a recipient of the Chung Mong-Koo Science and Technology Scholarship (정몽구 과학기술 스칼러십(대학원))!",
+    type: "award",
+    // link: "",
+  },
+  {
+    year: 2026,
+    month: 6,
     content: "🏅 Selected as a recipient of the Master's Excellence Scholarship (석사우수장학금(이공계))!",
     type: "award",
     // link: "",
