@@ -26,5 +26,6 @@ pnpm-debug.log*
 # vscode setting folder
 .vscode/
 
-# AI setting folder
-.claude/
+# AI setting folder (ignore local settings, but version-control skills)
+.claude/*
+!.claude/skills/
