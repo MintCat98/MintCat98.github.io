@@ -38,6 +38,13 @@ const typeColors: Record<NewsType, string> = {
 const newsData: NewsItem[] = [
   {
     year: 2026,
+    month: 7,
+    content: "🧑🏻‍🏫 Joined the KAIST SW Education Center IT Academy as an instructor!",
+    type: "notice",
+    // link: "",
+  },
+  {
+    year: 2026,
     month: 6,
     content: "🏅 Selected as a recipient of the Chung Mong-Koo Science and Technology Scholarship (정몽구 과학기술 스칼러십(대학원))!",
     type: "award",

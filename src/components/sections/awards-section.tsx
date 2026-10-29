@@ -108,7 +108,7 @@ const awardsData: AwardItem[] = [
     description: "Named a top-tier undergraduate engineering student based on my proven technical vision and commitment to advancing science and technology.",
     year: 2025,
     month: 9,
-    selected: true,
+    selected: false,
     link: "https://www.openbadge-global.com/ns/portal/openbadge/public/assertions/detail/OWlCYWNvTFEvQXJiZHN5OGtONHZvdz09",
     icon: Medal,
     image: "/awards/8.ipesk-next-generation-engineering-talent-2025.png",
@@ -136,6 +136,18 @@ const awardsData: AwardItem[] = [
     link: "",
     icon: Medal,
     image: "/awards/10.hyundai-motor-chung-mong-koo-scholarship-2026.jpg",
+  },
+  {
+    id: 11,
+    title: "2026 Master's Excellence Scholarship (Science and Technology)",
+    organization: "Ministry of Science and ICT (MSIT)",
+    description: "Recipient of the 2026 Master's Excellence Scholarship (Science and Engineering), a national scholarship awarded by the Ministry of Science and ICT through the Korea Student Aid Foundation (KOSAF) to around 1,000 full-time master's students nationwide recognized for outstanding research potential, with support for up to four semesters.",
+    year: 2026,
+    month: 8,
+    selected: true,
+    link: "",
+    icon: Medal,
+    image: "/awards/11.master-excellence-scholarship.jpeg",
   },
 ]
 

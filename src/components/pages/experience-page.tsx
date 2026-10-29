@@ -158,7 +158,7 @@ const timelineItems: TimelineItem[] = [
       </>
     ),
     startDate: "Aug 2024",
-    endDate: "Present",
+    endDate: "Jul 2026",
     description: (
       <>
         Cohort 3 & 4: Empowering student communities at DGIST <i>(2024-2025)</i> and KAIST <i>(2026)</i> to optimize digital workflows and productivity.
@@ -180,6 +180,22 @@ const timelineItems: TimelineItem[] = [
     description: (
       <>
         Selected for the Autonomous Driving track, completing a comprehensive curriculum covering perception, motion planning, and vehicle network systems.
+      </>
+    ),
+  },
+  {
+    category: "work",
+    title: "AI Instructor & Curriculum Developer",
+    organization: (
+      <>
+        <a href="https://ita.kaist.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-primary link-underline">@ KAIST SW Education Center IT Academy</a>
+      </>
+    ),
+    startDate: "Jul 2026",
+    endDate: "Present",
+    description: (
+      <>
+        Developing project-based learning (PBL) AI curricula for military service members, and lecturing on the theory and applications of <i>deep learning</i> and <i>reinforcement learning</i>.
       </>
     ),
   },

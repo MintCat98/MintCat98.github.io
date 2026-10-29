@@ -40,10 +40,10 @@ const highlights = [
     icon: Award,
     title: "Featured Honor",
     subtitle: "2026",
-    content: "Won 2nd Place at the KAIST Opensource Impact (KOI) Contest 2026 with ChatTree, a Chrome extension for navigating Claude.ai conversations.",
-    link: "/work/awards",
+    content: "Selected as a recipient of the 2026 Hyundai Motor Chung Mong-Koo Scholarship (Science and Technology, graduate division), awarded to 20 students nationwide with full tuition and research support.",
+    link: "/work/awards?highlight=10",
     linkText: "See More Awards",
-    image: "/awards/kaist-opensource-impact-2026.jpeg",
+    image: "/awards/10.hyundai-motor-chung-mong-koo-scholarship-2026.jpg",
   },
 ]
 
